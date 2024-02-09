@@ -1,3 +1,11 @@
 VPC is a virtual private network I.e a logically isolated section which is defined by a user in a cloud. This enables you to create a secure and scalable environment for running your applications and services in the cloud while maintaining isolation from other AWS customers. 
 
 This acts like a plot in a vast area where you can built your boundaries, create your applications create your own IP address range and can have complete control over incoming and outgoing traffic, create subnets organize resources and setup your own network environment in the way you wanted.
+
+VPC is a availability zone service it is acessible acrozz different availability zones but a VPC created in one region is not available in other region and if a AZ goes down tjhe vpc in that AZ also goes down.
+
+VPC ROUTER :
+This VPC router is responsible for routing network inbound and outbound traffic between different subnets within the VPC. This contains routing table with IP addrfesses and the router controls the traffic based on these routing tables.
+
+INTERNET GATEWAY:
+The internet gateway acts as bridge connecting the VPC to the internet resources. This acts as a entry and exit point for the network traffic between VPC and internet.IGW provides connectivity between a VPC and the public internet, enabling instances within the VPC to access the internet and allowing external users or services to communicate with instances in the VPC
