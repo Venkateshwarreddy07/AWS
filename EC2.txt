@@ -1,5 +1,15 @@
 Amazon Elastic Compute Cloud (EC2) provides an on-demand scalable computing capacity in AWS. EC2 reduces hardware costs and makes things easy for developers to develop and deploy applications faster. You can launch as many virtual servers and configure security manage storage. These EC2 runs on EC2 hosts and this is availability zone service which is available within the AZ. If the AZ fails the EC2 goes down.
 
+TYPES OF INSTANCES:
+
+General Purpose Instances
+Compute Optimized Instances
+Memory Optimized Instances 
+Storage Optimized Instances.
+Accelerated Computing Instances
+Burstable Instances 
+High Performance Computing (HPC) Instances 
+
 EC2 SECURITY:
 
 EC2 is secured with security groups which is a firewall which controls inbound and outbound traffic. A private key is stored on local machine and a public key stored on EC2 instance and only if these key pair match and a user proves their identity a user can have access to the EC2.
@@ -7,6 +17,8 @@ EC2 is secured with security groups which is a firewall which controls inbound a
 VIRTUALIZATION: 
 
 Virtualization is a process of running more than one O.S with multiple applications on a single hardware or single server which is very effective. This process of functioning multiple O.S with different application can be done using hypervisor. A server with its O.S as such multiple servers with their different O.S are functioned to be run on a single hypervisor.
+
+A hypervisor is a layer that enables multiple operating systems or virtual machines  to run on a single physical machine or server hardware. 
 
 ELASTIC BLOCK STORAGE: This is a storage service in which raw data is divided and stored in form of disks and these disks are allocated with block ID and these are organized and stored this is known as volumes. Generally EBS are connected to instance where all the data that functioned on instance will be stored in these volumes and for data availability and data recovery these EBS volumes are connect to S3 buckets where all the data is persistently stored in S3 buckets In S3 all the data is stored permanently and you can also take the snapshot of the data stored in S3 from EBS. Even if the instance goes down the data can be retrieved from the EBS. 
 
