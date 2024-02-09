@@ -18,7 +18,7 @@ VIRTUALIZATION:
 
 Virtualization is a process of running more than one O.S with multiple applications on a single hardware or single server which is very effective. This process of functioning multiple O.S with different application can be done using hypervisor. A server with its O.S as such multiple servers with their different O.S are functioned to be run on a single hypervisor.
 
-A hypervisor is a layer that enables multiple operating systems or virtual machines  to run on a single physical machine or server hardware. 
+HYPERVISOR: A hypervisor is a layer that enables multiple operating systems or virtual machines  to run on a single physical machine or server hardware. 
 
 ELASTIC BLOCK STORAGE: This is a storage service in which raw data is divided and stored in form of disks and these disks are allocated with block ID and these are organized and stored this is known as volumes. Generally EBS are connected to instance where all the data that functioned on instance will be stored in these volumes and for data availability and data recovery these EBS volumes are connect to S3 buckets where all the data is persistently stored in S3 buckets In S3 all the data is stored permanently and you can also take the snapshot of the data stored in S3 from EBS. Even if the instance goes down the data can be retrieved from the EBS. 
 
