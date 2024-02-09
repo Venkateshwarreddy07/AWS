@@ -1,0 +1,3 @@
+VPC is a virtual private network I.e a logically isolated section which is defined by a user in a cloud. This enables you to create a secure and scalable environment for running your applications and services in the cloud while maintaining isolation from other AWS customers. 
+
+This acts like a plot in a vast area where you can built your boundaries, create your applications create your own IP address range and can have complete control over incoming and outgoing traffic, create subnets organize resources and setup your own network environment in the way you wanted.
