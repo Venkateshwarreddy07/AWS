@@ -8,10 +8,14 @@ VIRTUALIZATION:
 
 Virtualization is a process of running more than one O.S with multiple applications on a single hardware or single server which is very effective. This process of functioning multiple O.S with different application can be done using hypervisor. A server with its O.S as such multiple servers with their different O.S are functioned to be run on a single hypervisor.
 
-PARA VIRTUALIZATION:
+ELASTIC BLOCK STORAGE: This is a storage service in which raw data is divided and stored in form of disks and these disks are allocated with block ID and these are organized and stored this is known as volumes. Generally EBS are connected to instance where all the data that functioned on instance will be stored in these volumes and for data availability and data recovery these EBS volumes are connect to S3 buckets where all the data is persistently stored in S3 buckets In S3 all the data is stored permanently and you can also take the snapshot of the data stored in S3 from EBS. Even if the instance goes down the data can be retrieved from the EBS. 
 
+These EBS can be detached and can be reattached to other instance so that all the data available in this EBS can be functioned on the newly connected instance this can also be done across different regions.
 
-EBS, SNAPSHOTS.
+SNAPSHOTS: 
+
+Snapshots These are defined as the data replica or data copies from an S3. All the data that stored in an S3 and die to some technical issues the instance goes down and if the needs To be retrieved then we can take the snapshots from the S3 bucket that is connected to the EBSand this snapshots are used to create a new EBS and this EBS can be connect to different instance in different region. This acts as a back data copy of a function. 
+
 
 
 
