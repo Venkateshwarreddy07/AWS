@@ -1,5 +1,11 @@
 Amazon Elastic Compute Cloud (EC2) provides an on-demand scalable computing capacity in AWS. EC2 reduces hardware costs and makes things easy for developers to develop and deploy applications faster. You can launch as many virtual servers and configure security manage storage. These EC2 runs on EC2 hosts and this is availability zone service which is available within the AZ. If the AZ fails the EC2 goes down.
 
+Provides flexibility
+provides scalability
+cost efficient 
+High performance 
+
+
 TYPES OF INSTANCES:
 
 General Purpose Instances
