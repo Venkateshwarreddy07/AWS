@@ -1,12 +1,20 @@
 Amazon S3 (Simple Storage Service) buckets are containers for storing objects in the Amazon Web Services (AWS) cloud. They are essentially folders within the S3 service where you can store and organize data, such as documents, images, videos, and application data.
 
-S3 SECURITY:
+WHY S3 :
 
-S3 is private by default 
+S3 generally used for storing any kind of data. S3 bucket is highly available storage service used to store wide range of data types. Many organizations use S3 to store,backup,retrive data securly from the cloud.S3 buckets are used foe databackup and store critical data for longterm with snapshots as alternate security to overcome disaster recovery, dataloss.S3 is private by default.
 
-Identity-based policies are attached to IAM (Identity and Access Management) users, groups, or roles. These policies define what actions a specific IAM identity can perform on Amazon S3 resources.
+S3 ACCESS: 
 
-resource-based policies are attached directly to S3 buckets or objects. These policies define who can access the resources within the bucket or object and what actions they can perform. In this policies we define the cross region access as S3 being the regional service
+When we create a S3 bucket a bucket can be managed by set of rules here they are policies lets look into them, 
+
+IDENTITY BASED POLICIES:  These are directly attached to IAM (Identity and Access Management) users, groups, or roles. These policies define what actions a specific user can perform on Amazon S3 resources. You are an admin and have read only acess and developer may have both the read and write access this actions are controlled by IAM policies.
+
+RESOURCE-BASED POLICIES: These are attached to S3 buckets or objects. These policies define who can access the resources within the bucket or object and what actions they can perform. In this policies we define the cross region access as S3 being the regional service. Lets say there is a admin and developer admin may not have access to developer code this is what the resource policies deals with the access of letting the roles have permission or not.
+
+INLINE POLOCIES : These are said to all the additional polocies that are created by the owner to customize and create his individual set of rules.
+ACL: 
+
 
 STATIC WEBSITE HOSTING:  
 
