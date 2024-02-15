@@ -58,3 +58,13 @@ Known as pointer record. This is quite opposite to the A or AAAA record these re
 TXT RECORD:
 TXT or text this record contains miscellaneous information about the domain such as general or contact information. These are also used to prevent email spam by making sure incoming email is coming from a trusted or authorized source
 
+ROUTE 53 MULTIVALUE ROUTING :
+Multi value routing aims to improve more availabiliy by allowing more active approach to DNS. This is used when you have multi resources and all service requests and all need to be health checked, So any healthy record will be returned and if there are more healthy records then the random healthy record will be retruned.
+
+WEIGHTED ROUTING : 
+This is another routing polocy and is used when you want simple form of load balancing or when you want to test new versions of software. Lets say we are having a hosted zone with 3 records and these records are allocated with record weights lets say 40 40 and 20 now this record weight indicated that the record is returned that many times record with record weight 40 will be returned 40% and records weight with 20 will be returned 20% and as such and if you come across any unhealthy record this process repeated untill we find  healthy record.
+
+R53 LATENCY ROUTING : 
+This is another routing policy, Lets say we have 3 records in 3 different regions with 3 different latencies and a user from another region wants to acess a record now the record with lowest latency will be provided to the user and if the record with lowest latency is unhealthy then the record with second lowest latency will be provided.
+
+
