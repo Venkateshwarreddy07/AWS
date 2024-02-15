@@ -1,0 +1,60 @@
+AMAZON ROUTE 53 :  
+
+Amazon R53 is a highly available and  scalable cloud domain Name System (DNS) web service provided by AWS. This is basically designed for developers and corporates to route the end users to internet applications by translating the human readable text to IP address. Generally this R53 service provides DNS and traffic management along with performance monitoring with regular health checks.
+
+FUNCTIONS OF R53 :
+
+DOMAIN NAME REGISTRATION, Any web application requires a domain name R53 helps to register that  name with website.
+
+DOMAIN NAME SYSTEM (DNS) SERVICE, whenever a user enters the domain name R53 helps to translate it to ip address and connect it to the website. If any failures are detected at any level, it automatically routes the user to healthy resource.   
+
+HEALTH CHECKING, This monitors the health of the resources in regular intervals by sending the automated requests to the application to make sure that it is reachable, available and functional. Cloudwatch alarms are configured for health checks and notifications are sent if any issue or any resource becomes unavailable.
+
+ROUTE 53 ACTIVITY :
+
+Let's assume a user enters www.abc.com----> Now, Here you are actually searching for ww.abc.com. this . might not be physically present but it is there and this is the root domain when you enter www.abc.com  this will be sent to root server, here it lookup for root domain ( .com.) and this root domain checks for the TLD( Top Level Domain) it may be .com, .org, .in, etc. There will be different organizations hosting different domains. This .com part in www.abc.com is known as TLD now this Top Level Domain is responsible for the information of top level domains such as .com, .org,.in etc. In this case www.abc.com the root server will forward this to .com TLD because for www.abc.com the TLD is .com, Now TLD forwards this query to second level domain in www.abc.com abc part is the second level domain once the abc.com reached the second level domain or also known as name server this translates ti IP address and send the request to the web resources and the end user will be give n with the abc.com page. Here in www.abc.com www part becomes the subdomain even if you search www.abc.com or abc.com you will be taken to www.abc.com page because of CNAME record which we will soon come across.
+
+           WWW>ABC>COM ---->WWW>ABC>COM. ----> . referes to root server
+           WWW.ABC.COM    ---->WWW.ABC.COM  ----> .COM refers to Top Level Domain (TLD)
+           WWW.ABC.COM  ----->WWW.ABC.COM -----> ABC refers to Second Level Domain
+           WWW.ABC.COM ------> WWW.ABC.COM ----> WWW refers to subdomain.
+
+RECORD TYPES:
+
+A(Address) RECORD :
+
+This is A record or address record this is most common record this is what resolves a domain name into IP address. In specific this resolves into an IPV4 address which is a 32-bit numeric address. So, when you type in a domain name for example www.abc.com in a web browser the A record resolves it into an IP address. This is very basic and used for low level such as home network or small to medium level business  and  we also have Time To Leave TTL which tells us how long each record is valid until next update.
+
+AAAA RECORD ( Quad A record) :
+
+This record is similar to A record, both A and AAAA record resolves the domain names into IP address but in specific AAAA record resolves domain name into IPV6 address which is 128-bit alphanumeric address. Still IPV4 are widely in use but due to some limitations in IPV4 we replace with IPV6 hence use quad A record.  Used for larger networks and network with many devices.
+
+CNAME ( Canonical name)   :
+
+This resolves a domain or sub-domain into another domain name for example if you search google.com or www.google.com you will be taken to google home page. This the purpose of name or alias record. Sub domains are  used when there are different services running on the same server and using the same IP address now they create a subdomain lets say there is FTP service running on the same server and when you enter ftp.abc.com and create a CNAME it checks with the subdomain and sends it to abc.com but when this reaches the sever the server examines the url and send it to the ftp service.
+
+MX (or) MAIL EXCHANGE :
+
+MX record simply points to the server where emails should be delivered for that domain. When you send an email to Xperson@example.com then the MTA(Mail Transfer Agent) will check with the MX records for example.com because it is looking for email server then the DNS will respond  to MTA saying  which server the email needs to be sent. MX record tells the world for a particular domain name which server needs to send the mail. MX record always have two server with priority numbers the lower the priority number the higher the priority and if one server goes down another server will backup the process.
+
+START OF AUTHORITY:
+
+This stores the administrative information about the DNS zones. DNS zone means a section of a domain name space that a particular administrator has  control over. Here www.abc.com is divided into subdomains and a particular administrator will have control over these subdomains and manages. lets look into an example,
+
+lets assume our example         WWW.ABC.COM is divided into three sub domains FRONT.ABC.COM( has 50 computers) ,  BACK.ABC.COM(50 computers),  SUPPORT.ABC.COM ( 500 computers) so in this first two subdomains are having each 50 computers where as third subdomain is having 500 so as there are less computers in first two subdomains these two subdomains will be under one administrator and the third subdomain will be under one administrator. So these two administrators manage domain zones. Domain zones are created for manageability purposes. In SOA MNAME ----> PRIMARY NAME SERVER,   RNAME ---> EMAIL ADDRESS OF THE ADMINISTRATOR FOR THE ZONE, #SERIAL ---> VERSION OF THE ZONE.
+
+
+NS RECORD:
+
+Which stands for name server record. Provides the name of the authoritative name server within a domain. Name server contains all the nessasary DNS records for the users to find the computer or server on local network or internet. NS record generally lists two server names as primary and secondary.
+
+SRV RECORD :
+A service record points to server and also points to specific service and also includes port number so when the application needs to find the location of a service in a domain such as voiceoverIP or instant messaging or printer  it looks service record if there is a listing for specific service and redirect it to the correct server and correct port number.
+
+PTR RECORD:
+
+Known as pointer record. This is quite opposite to the A or AAAA record these resolve IP addresses into domain names. These are attached to emails and used to prevent email spams. So whenever emails are received the email server uses PTR record and makes sure that sender is authentic by matching with the domain name with the email with authentic IP address. This is how reverse DNS lookup. If the email sent is not matching with the authentic IP address  then the email will be flagged into spam.
+
+TXT RECORD:
+TXT or text this record contains miscellaneous information about the domain such as general or contact information. These are also used to prevent email spam by making sure incoming email is coming from a trusted or authorized source
+
