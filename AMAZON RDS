@@ -64,3 +64,19 @@ AMAZON AURORA :
 NON- RELATIONAL DATABASES :
 
 Semistructured and unstructured data are often stored in non-relational database systems, sometimes called NoSQL databases. It is important to remember that SQL is a way of querying data. It implies precise structure. Non-relational or NoSQL does not mean the data stored cannot be queried using SQL. A better way to think of the term "NoSQL" is "not only SQL."
+
+AMAZON ELASTIC CACHE :
+One can use amazon elastic cache to improve the performance of the application by retrieving data from high throughput and low latency in-memory data stores. If an application is running slow and need to improve its performance then you can use amazon elastic cache and this is a popular choice for gaming, advertising technology (ad tech), financial service, healthcare, and Internet of Things (IoT) apps.
+AMAZON DYNAMIC DB :
+Amazon DynamoDB can handle more than 10 trillion requests per day and support peaks of more than 20 million requests per second. More than 100,000 AWS customers have chosen DynamoDB as their key-value database for mobile, web, gaming, ad tech, IoT, and other applications that need low-latency data access at any scale. DynamoDB supports ACID-compliant transactions.
+
+AMAZON NEPTUNE :
+Amazon Neptune is a fast, reliable, fully managed graph database service that makes it easy to build and run applications that work with highly connected data sets used to discover potential fraudulent behavior before it happens. This starts with finding interactions between products, locations, and devices and then mapping those data points to individual users, customers, and/or employees.
+Neptune graph use cases include recommendation engines, fraud detection, knowledge graphs, drug discovery, and network security.
+
+AMAZON DOCUMENT DB :
+Amazon DocumentDB is a fast, reliable, and fully managed database service that allows you to set up, operate, and scale MongoDB-compatible databases in the cloud. With Amazon DocumentDB, you can run the same application code and use the same drivers and tools that you use with MongoDB.
+Amazon DocumentDB is used for storing semistructured data as a document, rather than normalizing data across multiple tables, each with a unique and fixed structure, as in a relational database. Documents stored in a document database use nested key-value pairs to provide the document's schema.DynamoDB supports some of the world’s largest scale applications by providing consistent, single-digit millisecond response times at any scale. You can build applications that grow as needed with virtually unlimited throughput and storage.
+With DynamoDB, there are no servers to provision, patch, or manage, and there's no software to install, maintain, or operate. DynamoDB automatically scales up and down to adjust for the capacity and maintain performance of your systems. Availability and fault tolerance are built in, eliminating the need to architect your applications for these capabilities. The service stores data in the form of tables, items, and attributes. When you create a table, you define a partition key attribute to uniquely identify each item in that table. This way, no two items can have the same key. You can also assign other attributes, like a sort key attribute.
+DynamoDB makes a suitable platform for many different use cases, including providing game companies with scalability and millisecond response times. d All games can take advantage of DynamoDB, whether they’re played on mobile devices, a console, or the desktop. They can store game state, user profiles, and a user’s inventory as well as purchases
+
