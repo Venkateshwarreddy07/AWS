@@ -100,3 +100,8 @@ DATABASE ARCHITECTURES -------   1) Server Based Architecture 2) Serverless Arch
 
 2) Serverless Architecture : In a serverless architecture, you do not need to provision or manage database server instances explicitly. Instead, the database service automatically handles server provisioning, scaling, and maintenance on your behalf.
 With serverless architecture, you pay only for the resources consumed by your database on a per-request. 
+
+Data Migration :
+
+Managing on-premises and cloud-based databases to run at scale, with high availability and reliability is a difficult, time-consuming, and expensive undertaking. Migrating your databases and data warehouses to AWS allows you to take advantage of a portfolio of fully managed, high-performance, and cost-effective databases. There are several AWS tools and services to migrate data from an external database to AWS. AWS Database Migration Service (AWS DMS) helps you migrate databases to AWS efficiently and securely. The source database can remain fully operational during the migration, minimizing downtime to applications. At its most basic level, AWS DMS is an instance in the AWS Cloud that runs replication software.
+
