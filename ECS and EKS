@@ -1,0 +1,72 @@
+Why ECS came into picture ?
+
+Virtualization is a process of running more than one O.S with multiple applications on a single hardware or single server which is very effective. This process of functioning multiple O.S with different application can be done using hypervisor. A server with its O.S as such multiple servers with their different O.S are functioned to be run on a single hypervisor.  A hypervisor is a layer that enables multiple operating systems or virtual machines to run on a single physical machine or server hardware. 
+
+Limitation :  In virtualization multiple O.S run with multiple applications simultaneously, but the drawback is the O.S occupies the majority of the resources, The most of the virtual machine is taken by the O.S. Lets say for example if you run a virtual machine with 4GB  RAM and 14GB disk then 60-70% of it and most of the remaining storage is occupied by the O.S, leaving little for the applications and runtime environments So, This effects the every operation such as start, stop and restart to manipulate the resources. So, inorder to overcome this we use Elastic Container Service.
+
+What is ECS ?
+
+Amazon ECS is a fully managed container orchestration service provided by Amazon Web Services (AWS). It allows you to run, manage, and scale Docker containers in the cloud without needing to manage the underlying infrastructure. an "orchestration service" refers to a set of tools and capabilities that automate the deployment, management, and scaling of containers. Orchestration involves coordinating and managing the lifecycle of containerized applications, including tasks such as provisioning resources, scheduling containers on available infrastructure, monitoring container health, and handling failover and scaling as needed.
+
+
+What are Docker Containers?
+
+Think of Docker containers as lightweight, portable, and self-sufficient packages that contain everything your application needs to run smoothly. They encapsulate your application code, its dependencies (like libraries and frameworks), and even the runtime environment (like the operating system components) into a single package.Consider a shipping container used in transportation. It's a standardized box that can hold various types of goods. Docker containers work similarly. They provide a standardized way to package and run applications, regardless of the underlying infrastructure.
+
+Advantages of Docker Containers:
+
+Portability: Docker containers can run consistently across different environments, whether it's your local development machine, a testing server, or a production server. This ensures that your application behaves the same way everywhere.
+Isolation: Each Docker container operates independently of others, providing a level of isolation. This means that changes or issues in one container won't affect others, enhancing security and reliability.
+Resource Efficiency: Docker containers share the same underlying operating system kernel, which reduces resource overhead compared to traditional virtual machines. This allows you to run more containers on the same hardware without sacrificing performance.
+
+How ECS Overcomes Virtualization Drawbacks ?
+
+ECS uses Docker containers to package and run applications. Containers are isolated from each other but share the same OS kernel. This means they consume fewer resources compared to VMs since they don't each need their own complete OS. ECS uses containerization instead of virtualization, which results in better resource utilization and efficiency. Containers share the host operating system kernel, reducing the overhead compared to virtual machines. Containers typically have lower overhead compared to virtual machines, leading to better performance and faster startup times. ECS allows you to pack more containers onto a single host without sacrificing performance. ECS containers typically store their files and data within the container itself or in external storage solutions such as Amazon EBS (Elastic Block Store) or Amazon EFS (Elastic File System). ECS does not provide long-term storage for containers; instead, it relies on external storage services for persistent data storage.
+
+Concepts of ECS : ECS Cluster, Task Definition, , Container Instance, Service.
+
+ECS Cluster, 
+An Amazon ECS cluster is a logical grouping of tasks or services managed by ECS.
+
+Example:
+
+Cluster 1: Development Cluster
+
+Purpose: Used by developers for testing and development purposes.
+Configuration: This cluster consists of smaller EC2 instances optimized for cost-effectiveness in a non-production environment. It has limited resources allocated.
+Services: Each microservice has its own task definition running on this cluster, allowing developers to test changes independently.
+
+Cluster 2: Production Cluster
+
+Purpose: Hosts the live production environment of the e-commerce application.
+Configuration: This cluster consists of larger, more powerful EC2 instances or utilizes AWS Fargate for better scalability and performance in a production environment. It has resources allocated to handle the expected production workload.
+Services: Each microservice has its own service running on this cluster, ensuring high availability, fault tolerance, and scalability of the production application.
+
+
+Task Definition:
+
+Role: Defines the configuration for running a containerized application.
+Example: We define task definitions for each component of our e-commerce website, such as a task for the frontend web server, a task for the backend database, a task for handling payment processing, etc.
+
+Container Instance:
+
+Role: Represents the underlying compute resources (EC2 instances or AWS Fargate) where tasks are run.
+Example: ECS manages a fleet of EC2 instances or AWS Fargate containers to host the tasks of our e-commerce website. These instances handle the execution of Docker containers that make up our website's components.
+
+Service:
+
+Role: Ensures that a specified number of tasks are running and maintains their desired state within an ECS cluster.
+Example: We define services to manage the lifecycle of tasks for critical components of our e-commerce website, such as the frontend web server. The service ensures that the desired number of tasks are always running, automatically replacing any failed tasks to maintain availability.
+
+
+
+EKS_____Elastic Kubernetes Service :
+
+Kubernetes, also known as K8s, is an open-source system for automating deployment, scaling, and management of containerized applications. It simplifies the process of deploying, managing, and scaling containerized applications using Kubernetes on AWS infrastructure.
+
+Kubernetes Cluster :  
+
+--> A cluster in kubernetes is a highly available cluster of compute resource and these are organized to work as one unit. 
+--> The cluster starts with cluster control plane, It manages the cluster scheduling, applications, scaling and deploying. 
+-->Compute within K8 cluster provided by VM nodes, these are virtual or physical servers which function as worker in the cluster, these are the things that run containerized applications, These contains containerd or docker software for handling container operations and next we have Kubelet.
+--> Kubelet is an agent to interact with the cluster control plane using k8 API
