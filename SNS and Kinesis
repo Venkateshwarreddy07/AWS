@@ -1,0 +1,72 @@
+SNS 
+
+We generally receive notifications on our mobile phones from the applications we use who sends these notification how rhey send us lets learn about it. 
+
+Simple Notification Service is a highly available, scalable, fully managed pub-sub messaging service. Pub-sub is a publisher and subscriber architecture where publisher maintains and indirect communication with the subscribers. Lets see how, 
+
+SNS PRINCIPLE : 
+
+Here published wants to send the notifications to the subscriber so he creates a topic and this topic acts as the access point between the publisher and subscriber and the publisher send the messages to the topic and his job is done. Now after publisher sending the message to the topic the topic will send this message to the subscriber who have subscribed to this particular topic. This message can be in any format either SMS, email, mobile notification or Amazon SQS. 
+
+SETTING UP SNS IN AWS CONSOLE:
+
+When a publisher wants to send any message to the subscriber you initially create a topic in the console while creating a topic you need to select the topic type it can be of either FIFO or STANDARD lets look into these types.
+
+FIFO: 
+
+First In First Out this type mainly focuses on the order of delivering the message and mainly used in financial applications while performing the transactions.
+
+STANDARD : 
+
+This type of topic do not focuses on order of the messages. we will come up with example for each of this topic in further discussion.
+
+So, when you create a topic you will select the type of topic based on the requirement and after selecting the topic you will give permission that who can send the message only publisher or anyone in the organization or only the aws account holders. In the same way you will also set the permissions for receiving the messages that who can receive the message only subscribers or everyone or only particular consumers as such based on the requirement.
+
+Lets Consider a Custom Notification Scenario:-
+
+You are the owner of Youtube and consumers using YouTube are in millions of them some are subscribed to YouTube premium while others are not but still using with the ads running before video. Now the publisher wants to send the notifications in such a way that the users who have premium accounts will get notifications of new releases, and future premium offers and etc, while on the other hand users without subscription for premium will get notifications saying come its time to go ads free or its hight time tom save your time by going ad free as such. Now in this scenario you need to send the custom notifications So, you will be creating the custom policies using JSON and will be directly attaching them to the topic so that the notifications will be sent based on the policies that are customized and you can also set permissions directly while creating the topic for who all can receive the notifications and who cannot.
+
+Using FIFO and  Standard in Realife : 
+
+If you consider the LYFT application which is used for cab service, Here you will be having 3 sides of notification, Customer side notification , Driver side notification and Administrator side notification. 
+
+1) Customer Side Notification :
+
+When a user requests the ride and the first notification he receives is the driver details and then when he is 3 min away and then  when he reaches the pickup location and when the ride started and then went ride is about to end and when you reach the destination.
+
+2) Driver Side Notification :
+
+When the driver accepts the ride he will get the notification about the passenger details, then after reached the pickup location and then starting the ride then moments before reaching the destination and after finishing the ride.
+
+ In both the above cases the notifications are sent orderly one after other according to the situation such that the consumers will receive the notification after each and every operation. This scenario focuses on the ordering of messages hence we use FIFO in this type of scenarios.  
+
+FIFO is mainly used in financial applications when you perform multiple transactions at a time you should receive the notifications after each and every immediate transaction where the order of the notifications are very important. Now lets see where do we use the Standard type,
+
+Standard type is mainly used where the ordering of the notifications are not important such as consider a social media platform such as instagram her you will be receiving the notification for posts, likes and comments. Here in this scenario the order of the notifications doesn't really matter and have very less priority hence in this cases we use standard type.
+
+
+SNS with AWS Services :
+
+SNS can be integrated with other multiple services in AWS such as cloudwatch where we use SNS for sending alarms or alerts when a resource setup reaches threshold and also used in CloudFormation when a stack is changed or updated will receive a notification accordingly. So SNS can be integrated with multiple AWS services for productive usage. 
+
+ 
+Amazon Kinesis :
+
+This is a set of services provided by the aws service which intakes huge amounts of data i.e this data can be from any of the sources such as click streams or applications or etc and taking the large amounts of data and analyzing them and making something out the analysis such as from the analysis report fixing the errors or strengthening up the weak areas or knowing the trrend running and marketing according to the trend or analyzing the report and making business strategies for the market.  
+
+
+Kinesis Data Stream :
+
+Kinesis is a scalable streaming service i.e ingest data from lots of devices or from lots of applications and producers send these data into the kinesis stream which is basic entity of kinesis. The data ingested by producers to kineses stream by default will be available fro 24 hours and after 24 hrs a second later it will be deleted and this can be flexible by maintaining it throughout 365 days based on the requirement.
+This provides a way for producers to send huge quantities of data into aws , storing that data for a window of time and allowing multiple consumers to consume at different rates. The data uploaded in data stream will be stored as shards, more shards more expensive and more effective , These shards contains the data records where kinesis data records 1 record=1MB and will be having large number of records. 
+
+Kinesis firehose : 
+
+Here producers are designed to put data into kinesis streams and consumers are designed to consumer data from the kinesis stream. kinesis by default doesn't offer way to persist data the once the records age passes it will be deleted forever. Now kineses firehose is fully managed service to deliver data to supported services as S3 which lets data be persisted and it also used to load data to data stores and analytical services.
+
+Function of firehose is to deliver the incoming data coming from the sources to the destination, it can deliver to third party services, it can deliver to S3 buckets. Here the data uploaded by the producers will be stored into the kineses data stream it is a non persistent storage and this is integrated with the kinesis firehose which delivers the data to the respective destination such as S3 buckets and the data is delivered in real time. In kineses stream just act as a bridge between the producers and consumers but do not perform any action because the producers and consumers are designed accordingly to upload and consume then data.  So, when we connect the data stream to the firehose, data stream act as source for the firehose and the firehose delivers the data accordingly to respective destination. The producers can directly put the data into firehose if they don't require any function of data stream.  
+
+Data Analytics:
+
+Description: Amazon Kinesis Data Analytics enables you to analyze streaming data using standard SQL queries.
+Real-world Scenario: Suppose you operate a fleet management system with vehicles equipped with GPS devices. You can use Kinesis Data Analytics to analyze the real-time stream of GPS data, calculate metrics such as vehicle speed, fuel consumption, and route efficiency, and detect anomalies or deviations from predefined patterns, allowing you to optimize fleet operations and improve fuel efficiency.
