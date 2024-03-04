@@ -50,7 +50,52 @@ SNS with AWS Services :
 
 SNS can be integrated with other multiple services in AWS such as cloudwatch where we use SNS for sending alarms or alerts when a resource setup reaches threshold and also used in CloudFormation when a stack is changed or updated will receive a notification accordingly. So SNS can be integrated with multiple AWS services for productive usage. 
 
- 
+SIMPLE QUEUING SERVICE :
+
+SQS - Simple Queue Service
+
+Definition :
+
+SQS queues are a managed message queue service in AWS which help to decouple application components, allow Asynchronous messaging or the implementation of worker pools. This provides fully-managed message queues. It's a public service and accessible anywhere. Messages can be unto 256KB in data and if larger can be linked and stored in S3 bucket.   
+
+
+WHY SQS : 
+
+Let's say we have a two tier application. Web tier and App tier where web tier is receiving the information and send it to the app tier to process the information and app tier need to keep with the workload or else failure may occur and results in dataloss.  Here web tier is directly connected to app tier and this process is known as data integration. In data integration web tier sends the data from web tier to app tier and if the traffic increases the data transfer from web tier to app tier also increases and the app tier cannot process the data due to increase in traffic the data will be lost ignorer to overcome this problem by data integration we replace this process bye decoupled integration.
+
+What is Decoupled Integration : 
+
+In this process to transfer the data from web tier to app tier in between we connect SQS queuing service. So the data from the web tier do not direct sent to app tier it is sent to sms queuing service connected in between here the sis collects all the data sent and puts them in the order they receive and send it to the app tier after acknowledging that app tier can receive the data here even if the traffic increases the failure will not occur because sis will control the traffic and send then data in the queue without missing any data. this process is known as data integration. The data sent to sqs will be stored for a certain Time till the app tier iOS ready to process the data making sure the data isn't lost. 
+
+TYPES OF SQS :
+
+1) Standard Queue:  This is the default queue type in Amazon SQS. It offers a highly scalable and reliable messaging queue with best-effort ordering and at-least-once message delivery semantics. Standard queues support nearly unlimited throughput, making them suitable for a wide range of messaging use cases. This mainly used where ordering is not important. 
+
+Properties : 
+---> Standard queues support a nearly unlimited number of transactions per second.
+---> Best-Effort Ordering: Occasionally, messages might be delivered in an order different from which they were sent and received is strictly preserved.
+----> At-Least-Once Delivery: A message is delivered at least once, but occasionally more than one copy of a message is delivered.
+
+2) FIFO Queue : In AWS, a FIFO (First-In-First-Out) queue refers to a type of queue provided by Amazon Simple Queue Service (SQS). FIFO queues maintain the order in which messages are sent and received, ensuring that the first message sent is also the first to be received and processed by the consumers. This makes FIFO queues suitable for scenarios where message order is critical and where processing messages out of sequence could lead to errors or inconsistencies.
+
+Properties :
+---> High Throughput: FIFO queues support up to 300 messages per second (300 send, receive, or delete operations per second). When you batch 10 messages per operation (maximum), FIFO queues can support up to 3,000 messages per second.
+--->  First-In-First-out Delivery: The order in which messages are delivered in an order  from which they were sent and received is strictly preserved.
+---> Exactly-Once Processing: A message is delivered once and remains available until a consumer processes and deletes it. Duplicates are not introduced into the queue.
+
+
+Dead Letter Queue : 
+
+This not a type of queue but a configuration in SQS, The main task of a dead-letter queue is handling message failure
+• A dead-letter queue lets you set aside and isolate messages that can't be processed correctly to determine why their processing didn't succeed
+• It is not a queue type, it is a standard or FIFO queue that has been specified as a dead-letter queue in the configuration of another standard or FIFO
+
+Delay Queue : 
+
+An SQS Delay Queue is a type of Amazon Simple Queue Service (SQS) queue that introduces a delay before messages are available for consumption by consumers. In other words, messages sent to a delay queue are not immediately visible to consumers but are instead held in the queue for a specified period of time before becoming available. Delay queues are useful in scenarios where you need to defer the processing of messages until a later time, allowing for time-sensitive operations or scheduling of tasks.
+
+KINESIS
+
 Amazon Kinesis :
 
 This is a set of services provided by the aws service which intakes huge amounts of data i.e this data can be from any of the sources such as click streams or applications or etc and taking the large amounts of data and analyzing them and making something out the analysis such as from the analysis report fixing the errors or strengthening up the weak areas or knowing the trrend running and marketing according to the trend or analyzing the report and making business strategies for the market.  
