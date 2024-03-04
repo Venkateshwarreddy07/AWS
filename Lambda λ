@@ -1,0 +1,48 @@
+LAMBDA : 
+
+AWS Lambda is a serverless compute service provided by Amazon Web Services (AWS). It enables you to run code in response to events without the need to provision or manage servers. This means that you can focus on writing code for your applications without worrying about the underlying infrastructure.
+
+ "Serverless compute platform" refers to a computing environment where developers can run code without the need to manage or provision servers. Traditional server-based computing requires developers to set up and maintain servers, manage operating systems, handle scaling, and ensure high availability
+
+Lambda is a function as a service or fast product. That means you provide specialized and short running focused code to lambda and it take care for running and billing only for what you consume. Lambda is a piece of code that lambda runs. 
+
+LAMBDA FUNCTION : 
+
+The code you run on AWS Lambda is called a Lambda function. Think of a function as a small, self-contained application. After you create your Lambda function, it is ready to run as soon as it is initiated. Each function includes your code as well as some associated configuration information, including the function name and resource requirements. Lambda functions are stateless, with no affinity to the underlying infrastructure. Lambda can rapidly launch as many copies of the function as needed to scale to the rate of incoming events.
+
+After you upload your code to AWS Lambda, you can configure an event source, such as an Amazon Simple Storage Service (Amazon S3) event, Amazon DynamoDB stream, Amazon Kinesis stream, or Amazon Simple Notification Service (Amazon SNS) notification. When the resource changes and an event is initiated, Lambda will run your function and manage the compute resources as needed to keep up with incoming requests.
+
+
+Lambda functions are triggered by various events, such as changes to data in Amazon S3 buckets, updates to DynamoDB tables, HTTP requests via API Gateway, or custom events from other AWS services. You define the event sources and configure Lambda to execute your code in response to these events. An event-driven architecture uses events to initiate actions and communication between decoupled services. An event is a change in state, a user request, or an update, like an item being placed in a shopping cart in an e-commerce website. When an event occurs, the information is published for other services to consume it. In event-driven architectures, events are the primary mechanism for sharing information across services. These events are observable, such as a new message in a log file, rather than directed, such as a command to specifically do something. 
+
+
+
+Key features of AWS Lambda include:
+
+Serverless Architecture: With Lambda, you do not need to provision or manage servers. AWS handles the infrastructure provisioning, scaling, and maintenance for you. This allows you to focus on writing code and building applications without the overhead of managing servers.
+
+Event-Driven Execution: Lambda functions are triggered by events from different sources. You can define event sources such as AWS services, HTTP requests, or custom events. Lambda automatically invokes your function when the specified event occurs.
+
+Pay-Per-Use Pricing Model: AWS Lambda follows a pay-per-use pricing model. You are charged only for the compute time consumed by your functions, measured in milliseconds. There are no upfront costs or minimum fees, and you are billed only for the resources used during execution.
+
+Support for Multiple Runtimes and Languages: Lambda supports a variety of programming languages, including Node.js, Python, Java, Go, Ruby, and .NET Core. You can write Lambda functions in your preferred language and use familiar development tools and libraries.
+
+Integration with AWS Services: Lambda integrates seamlessly with other AWS services. You can use Lambda functions to process data from services such as Amazon S3, DynamoDB, Kinesis, SQS, SNS, and more. This enables you to build serverless architectures and event-driven workflows.
+
+REAL-TIME SCENARIO :  Consider a scenario of a web application where users upload images, and you need to generate thumbnails for these images in real-time. 
+
+Image Thumbnail Generation:Scenario: Users upload images to the web application, and you want to generate thumbnails for these images to improve performance and optimize storage.
+
+Using AWS Lambda:Event Source: Configure an Amazon S3 bucket to trigger a Lambda function whenever a new image is uploaded to the bucket.
+
+Lambda Function: Write a Lambda function in Python or Node.js to process the uploaded image. Use a third-party image processing library (e.g., Pillow for Python) to generate a thumbnail version of the image.
+
+Processing:Lambda Execution: When a user uploads an image to the S3 bucket, the S3 event triggers the Lambda function. The Lambda function retrieves the uploaded image, generates a thumbnail version of the image, and stores it back in the S3 bucket.
+
+Benefits:Real-time Image Processing: AWS Lambda enables real-time processing of uploaded images, allowing you to generate thumbnails on-the-fly without manual intervention.
+
+Scalability: Lambda automatically scales to handle varying workloads and traffic patterns. Whether you have a few uploads or thousands of uploads per second, Lambda can scale to meet the demand.
+
+Cost-Effectiveness: With Lambda's pay-per-use pricing model, you only pay for the compute time consumed by your functions. You can optimize costs by processing images only when needed, without incurring idle infrastructure costs.
+
+In summary, AWS Lambda provides a serverless compute platform that enables you to run code in response to events without the need to provision or manage servers. It offers scalability, cost-effectiveness, and seamless integration with other AWS services, making it ideal for building real-time, event-driven applications and workflows.
