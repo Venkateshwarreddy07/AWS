@@ -29,9 +29,9 @@ AFTER REDSHIFT :
 REDSHIFT ARCHITECTURE :
                                                             
 CLIENT---|                                                                                                   
-                       |                              JDBC/ODBC                    COMPUTE NODE--(node slices)
+                        JDBC/ODBC              COMPUTE NODE--(node slices)
 CLIENT ---------------- LEADER NODE ---------- COMPUTE NODE--(node slices)
-                       |                                                                                COMPUTE NODE--(node slices)
+                       |                       COMPUTE NODE--(node slices)
 CLIENT---|
 
 As mentioned above the redshift architecture is a cluster where multiple clients can be connected to a leader node where on the other side one or multiple(128) compute nodes are connected to the leader node and compute nodes are also having with multiple node slices in them. depending on the requirement. This is not infinity but 128 compute nodes can hold a lot of data. Each cluster can contain multiple databases. The user data will be stored on the compute nodes. Here leader node manages the communication with clients and communication with the compute nodes. This acts as the external communication interface between clients, redshift and compute nodes, It receives all the queries from the client application and passes the queries and develops execution plans which are an ordered set of steps to process those queries it then coordinates the parallel execution of those plans with the compute nodes and also aggregates the immediate results from those nodes and finally the leader node will return those results back to the client applications 
