@@ -1,0 +1,106 @@
+DYNAMO DB :
+
+DynamoDB is a NoSQL fully managed Database-as-a-Service (DBaaS) product available within AWS.  DynamoDB is a NoSQL database that supports key-value and document data models. Developers can use DynamoDB to build modern, serverless applications that start small and scale globally. These applications can support petabytes of data and tens of millions of read/write requests per second. DynamoDB is designed to run high-performance, internet-scale applications that might overburden traditional relational databases. DynamoDB is fully managed and offloads the administrative tasks of operating and scaling a distributed database. DynamoDB also offers encryption at rest, which helps eliminate the operational tasks involved in protecting sensitive data.
+
+Advantages:
+
+---> Millisecond performance and automatic multi-Region replication.
+--->Data encryption at rest and automatic backup and restore.
+---> Fully managed serverless database.
+---> Integration with other AWS services for analytics and performance or traffic monitoring.
+
+WHY DYNAMO DB ? 
+
+We may have other services like RDS but dynamo db is preferred in cases like low latency and high throughput where dynamo db has unlimited throughput and also server less. DynamoDB overcomes several challenges compared to other database services, making it well-suited for real-time, high-throughput, and scalable applications such as social media platforms. Its seamless scalability, performance, managed service offering, high availability, durability, and schema flexibility are critical factors in ensuring a smooth and reliable user experience.
+
+HOW DYNAMO DB WORKS ?
+
+Tables:- As with other database systems, DynamoDB stores data in tables. A table is a collection of data. For example, you might have a table called People that you could use to store personal contact information about solutions architects, business partners, or others. You could also have a Locations table to store information about your office buildings. 
+
+Items:- Each table contains zero or more items. An item is a group of attributes that is uniquely identifiable among all other items. In a People table, each item represents a person. For a Locations table, each item represents one building. Items in DynamoDB are similar in many ways to rows, records, or tuples in other database systems. In DynamoDB, there is no limit to the number of items you can store in a table.
+
+Attributes :- Each item is composed of one or more attributes. An attribute is a fundamental data element, something that does not need to be broken down any further. For example, an item in a People table contains attributes called PersonID, LastName, FirstName, and so on. For a Department table, an item might have attributes such as DepartmentID, Name, Manager, and so on. Attributes in DynamoDB are similar in many ways to fields or columns in other database systems.
+
+Primary Key :- When you create a table, in addition to the table name, you must specify the primary key of the table. The primary key uniquely identifies each item in the table so that no two items can have the same key. DynamoDB supports two kinds of primary keys: a partition key and a partition key plus sort key.
+
+Secondary Indexes : You can create one or more secondary indexes on a table. Using a secondary index, you can query the data in the table using an alternate key and also against the primary key. DynamoDB doesn't require that you use indexes, but they provide more flexibility when querying data. After you create a secondary index on a table, you can read data from the index in much the same way as you do from the table. DynamoDB supports two kinds of indexes:
+
+Global secondary index – An index with a partition key and sort key that can be different from those on the table
+Local secondary index – An index that has the same partition key as the table but a different sort key
+Each table in DynamoDB has a quota of 20 global secondary indexes (default quota) and five local secondary indexes.
+
+DynamoDB Streams:- DynamoDB Streams is an optional feature that captures data modification events in DynamoDB tables. The data about these events appear in the stream in near real time, and in the order that the events occurred. Each event is represented by a stream record. If you enable a stream on a table, DynamoDB Streams writes a stream record whenever one of the following events occurs:
+
+A new item is added to the table: The stream captures an image of the entire item, including all of its attributes
+An item is updated: The stream captures the before and after image of any attributes that were modified in the item
+An item is deleted from the table: The stream captures an image of the entire item before it was deleted
+Each stream record also contains the name of the table, event timestamp, and other metadata. Stream records have a lifetime of 24 hours, after which they are automatically removed from the stream.
+
+
+Throttling :- Throttling is the action of limiting the number of requests that a client can submit to a given operation in a given amount of time. Throttling prevents your application from consuming too many capacity units. When a request is throttled, it fails with an HTTP 400 Bad Request error and a ProvisionedThroughputExceededException.
+
+Real Time Scenario : 
+
+Consider a social media platform that needs to store and serve user-generated content, such as posts, comments, and likes, to millions of users worldwide. Here's how DynamoDB overcomes challenges compared to other database services:
+
+---> Scalability,The social media platform experiences fluctuating traffic patterns throughout the day, with peak usage during certain hours. DynamoDB's seamless scalability allows it to handle sudden spikes in traffic without manual intervention, ensuring that the platform remains responsive to user requests.
+
+--->Performance, Users expect near-instantaneous response times when interacting with the social media platform. DynamoDB's consistently low-latency access to data ensures that users can quickly view posts, comment on content, and engage with other users without experiencing delays.
+
+---> Managed Service, Managing infrastructure for a social media platform with millions of users would be a daunting task. With DynamoDB as a fully managed service, the platform's development team can focus on building features and improving user experience, rather than worrying about infrastructure management.
+
+--->High Availability and Durability, The social media platform cannot afford downtime or data loss, as it would result in a poor user experience and loss of trust from users. DynamoDB's built-in high availability and durability ensure that user data is always accessible and protected, even in the event of hardware failures or regional outages.
+
+COMPARING AMAZONDB WITH OTHER AWS DABASE SERIVICES:
+
+Amazon DynamoDB:
+
+Fully managed NoSQL database service.
+Provides seamless scalability with automatic scaling of throughput capacity.
+Optimized for high performance, single-digit millisecond latency, and consistent throughput.
+Schemaless design allows for flexible data modeling.
+Offers built-in features for security, backup and restore, and global replication.
+Suitable for a wide range of use cases, including web and mobile applications, gaming, IoT, and real-time analytics.
+
+Amazon Neptune:
+
+Fully managed graph database service.
+Optimized for storing and querying highly connected data with complex relationships.
+Supports graph query languages such as Gremlin and SPARQL.
+Ideal for applications requiring network analysis, recommendation engines, and social networks.
+
+Amazon DocumentDB (with MongoDB compatibility):
+
+Fully managed document database service compatible with MongoDB API.
+Designed for storing, querying, and indexing JSON-like documents.
+Provides scalability, high availability, and backup and restore capabilities.
+Suitable for applications with document-oriented data models and existing MongoDB workloads.
+
+Amazon Keyspaces (for Apache Cassandra):
+
+Fully managed Apache Cassandra-compatible database service.
+Designed for wide-column store capabilities and scalable, distributed data storage.
+Supports Apache Cassandra Query Language (CQL) and integrates with existing Cassandra applications.
+Suitable for applications requiring high availability, scalability, and fault tolerance.
+
+Amazon Timestream:
+
+Fully managed time-series database service.
+Optimized for storing and analyzing time-series data such as sensor readings and logs.
+Offers automatic scaling, retention policies, and built-in time-series functions.
+Ideal for applications with real-time data ingestion and analytics requirements.
+
+Amazon QLDB:
+
+Fully managed ledger database service.
+Provides a transparent, immutable, and cryptographically verifiable transaction log.
+Designed for applications requiring a centralized, tamper-proof ledger for maintaining data integrity and auditability.
+
+ Amazon DynamoDB is preferred over other database services in AWS for several reasons:
+
+DynamoDB offers seamless scalability, high performance, and low-latency access to data.
+Its fully managed nature reduces operational overhead and simplifies database administration.
+DynamoDB's flexible data model accommodates evolving application requirements without the need for schema changes.
+It is suitable for a wide range of use cases, including web and mobile applications, gaming, IoT, and real-time analytics.
+
+Use Case: Consider a real-time gaming application that requires low-latency data access, seamless scalability, and flexible data modeling. DynamoDB is an ideal choice for storing player profiles, game states, and in-game transactions due to its high performance, scalability, and schemaless design. With DynamoDB, the gaming application can handle fluctuating user loads, deliver real-time updates, and provide a responsive gaming experience to players worldwide.
