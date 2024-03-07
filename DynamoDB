@@ -37,6 +37,19 @@ An item is deleted from the table: The stream captures an image of the entire it
 Each stream record also contains the name of the table, event timestamp, and other metadata. Stream records have a lifetime of 24 hours, after which they are automatically removed from the stream.
 
 
+Read Capacity Units (RCU):
+
+RCU represents the number of read operations per second that a DynamoDB table can support. One RCU is equal to one strongly consistent read per second for items up to 4 KB in size, or two eventually consistent reads per second for items up to 4 KB in size.
+Strongly consistent reads ensure that the most recent data is retrieved, while eventually consistent reads may return data that is slightly stale but are less resource-intensive.
+The number of RCUs required for a specific workload depends on factors such as the number and size of items being read, the consistency requirements, and any additional query conditions or indexes.
+
+Write Capacity Units (WCU):
+
+WCU represents the number of write operations per second that a DynamoDB table can support. One WCU is equal to one write operation per second for items up to 1 KB in size.
+Write operations include inserts, updates, and deletes of items in the table. The size of the item being written affects the number of WCUs consumed, with larger items consuming more WCUs.
+The number of WCUs required for a specific workload depends on factors such as the write throughput, the size of the items being written, and any additional conditions or indexes.
+When creating or modifying a DynamoDB table, you specify the desired number of RCUs and WCUs based on your application's read and write throughput requirements. DynamoDB automatically scales the provisioned throughput capacity up or down in response to changes in traffic patterns, ensuring that the table can handle the required workload efficiently.
+
 Throttling :- Throttling is the action of limiting the number of requests that a client can submit to a given operation in a given amount of time. Throttling prevents your application from consuming too many capacity units. When a request is throttled, it fails with an HTTP 400 Bad Request error and a ProvisionedThroughputExceededException.
 
 Real Time Scenario : 
