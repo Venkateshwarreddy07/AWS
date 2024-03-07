@@ -103,4 +103,6 @@ Its fully managed nature reduces operational overhead and simplifies database ad
 DynamoDB's flexible data model accommodates evolving application requirements without the need for schema changes.
 It is suitable for a wide range of use cases, including web and mobile applications, gaming, IoT, and real-time analytics.
 
-Use Case: Consider a real-time gaming application that requires low-latency data access, seamless scalability, and flexible data modeling. DynamoDB is an ideal choice for storing player profiles, game states, and in-game transactions due to its high performance, scalability, and schemaless design. With DynamoDB, the gaming application can handle fluctuating user loads, deliver real-time updates, and provide a responsive gaming experience to players worldwide.
+Use Case: 
+
+Consider a real-time gaming application that requires low-latency data access, seamless scalability, and flexible data modeling. DynamoDB is an ideal choice for storing player profiles, game states, and in-game transactions due to its high performance, scalability, and schemaless design. With DynamoDB, the gaming application can handle fluctuating user loads, deliver real-time updates, and provide a responsive gaming experience to players worldwide.
