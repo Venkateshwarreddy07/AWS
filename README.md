@@ -245,6 +245,794 @@ where you can give other person or application access to an object inside a buck
 Now upload an object into a bucket and now you can generate pre assigned URL using cloud shell and also in console. while generating url you need to assign time till which the URL is valid. now you can have access to that object using this url and now if you add an inline policy that restricts the access of iamadmin now you do not have access to the object but still you can create preassigned URL but this url shows the access denied. This is mainly used in remote work scenarios. 
 
 ***********************************************************************************************************************************************************************************
+ROUTE 53
+AMAZON ROUTE 53 :  
+
+Amazon R53 is a highly available and  scalable cloud domain Name System (DNS) web service provided by AWS. This is basically designed for developers and corporates to route the end users to internet applications by translating the human readable text to IP address. Generally this R53 service provides DNS and traffic management along with performance monitoring with regular health checks.
+
+FUNCTIONS OF R53 :
+
+DOMAIN NAME REGISTRATION, Any web application requires a domain name R53 helps to register that  name with website.
+
+DOMAIN NAME SYSTEM (DNS) SERVICE, whenever a user enters the domain name R53 helps to translate it to ip address and connect it to the website. If any failures are detected at any level, it automatically routes the user to healthy resource.   
+
+HEALTH CHECKING, This monitors the health of the resources in regular intervals by sending the automated requests to the application to make sure that it is reachable, available and functional. Cloudwatch alarms are configured for health checks and notifications are sent if any issue or any resource becomes unavailable.
+
+ROUTE 53 ACTIVITY :
+
+Let's assume a user enters www.abc.com----> Now, Here you are actually searching for ww.abc.com. this . might not be physically present but it is there and this is the root domain when you enter www.abc.com  this will be sent to root server, here it lookup for root domain ( .com.) and this root domain checks for the TLD( Top Level Domain) it may be .com, .org, .in, etc. There will be different organizations hosting different domains. This .com part in www.abc.com is known as TLD now this Top Level Domain is responsible for the information of top level domains such as .com, .org,.in etc. In this case www.abc.com the root server will forward this to .com TLD because for www.abc.com the TLD is .com, Now TLD forwards this query to second level domain in www.abc.com abc part is the second level domain once the abc.com reached the second level domain or also known as name server this translates ti IP address and send the request to the web resources and the end user will be give n with the abc.com page. Here in www.abc.com www part becomes the subdomain even if you search www.abc.com or abc.com you will be taken to www.abc.com page because of CNAME record which we will soon come across.
+
+           WWW>ABC>COM ---->WWW>ABC>COM. ----> . referes to root server
+           WWW.ABC.COM    ---->WWW.ABC.COM  ----> .COM refers to Top Level Domain (TLD)
+           WWW.ABC.COM  ----->WWW.ABC.COM -----> ABC refers to Second Level Domain
+           WWW.ABC.COM ------> WWW.ABC.COM ----> WWW refers to subdomain.
+
+RECORD TYPES:
+
+A(Address) RECORD :
+
+This is A record or address record this is most common record this is what resolves a domain name into IP address. In specific this resolves into an IPV4 address which is a 32-bit numeric address. So, when you type in a domain name for example www.abc.com in a web browser the A record resolves it into an IP address. This is very basic and used for low level such as home network or small to medium level business  and  we also have Time To Leave TTL which tells us how long each record is valid until next update.
+
+AAAA RECORD ( Quad A record) :
+
+This record is similar to A record, both A and AAAA record resolves the domain names into IP address but in specific AAAA record resolves domain name into IPV6 address which is 128-bit alphanumeric address. Still IPV4 are widely in use but due to some limitations in IPV4 we replace with IPV6 hence use quad A record.  Used for larger networks and network with many devices.
+
+CNAME ( Canonical name)   :
+
+This resolves a domain or sub-domain into another domain name for example if you search google.com or www.google.com you will be taken to google home page. This the purpose of name or alias record. Sub domains are  used when there are different services running on the same server and using the same IP address now they create a subdomain lets say there is FTP service running on the same server and when you enter ftp.abc.com and create a CNAME it checks with the subdomain and sends it to abc.com but when this reaches the sever the server examines the url and send it to the ftp service.
+
+MX (or) MAIL EXCHANGE :
+
+MX record simply points to the server where emails should be delivered for that domain. When you send an email to Xperson@example.com then the MTA(Mail Transfer Agent) will check with the MX records for example.com because it is looking for email server then the DNS will respond  to MTA saying  which server the email needs to be sent. MX record tells the world for a particular domain name which server needs to send the mail. MX record always have two server with priority numbers the lower the priority number the higher the priority and if one server goes down another server will backup the process.
+
+START OF AUTHORITY:
+
+This stores the administrative information about the DNS zones. DNS zone means a section of a domain name space that a particular administrator has  control over. Here www.abc.com is divided into subdomains and a particular administrator will have control over these subdomains and manages. lets look into an example,
+
+lets assume our example         WWW.ABC.COM is divided into three sub domains FRONT.ABC.COM( has 50 computers) ,  BACK.ABC.COM(50 computers),  SUPPORT.ABC.COM ( 500 computers) so in this first two subdomains are having each 50 computers where as third subdomain is having 500 so as there are less computers in first two subdomains these two subdomains will be under one administrator and the third subdomain will be under one administrator. So these two administrators manage domain zones. Domain zones are created for manageability purposes. In SOA MNAME ----> PRIMARY NAME SERVER,   RNAME ---> EMAIL ADDRESS OF THE ADMINISTRATOR FOR THE ZONE, #SERIAL ---> VERSION OF THE ZONE.
 
 
+NS RECORD:
+
+Which stands for name server record. Provides the name of the authoritative name server within a domain. Name server contains all the nessasary DNS records for the users to find the computer or server on local network or internet. NS record generally lists two server names as primary and secondary.
+
+SRV RECORD :
+A service record points to server and also points to specific service and also includes port number so when the application needs to find the location of a service in a domain such as voiceoverIP or instant messaging or printer  it looks service record if there is a listing for specific service and redirect it to the correct server and correct port number.
+
+PTR RECORD:
+
+Known as pointer record. This is quite opposite to the A or AAAA record these resolve IP addresses into domain names. These are attached to emails and used to prevent email spams. So whenever emails are received the email server uses PTR record and makes sure that sender is authentic by matching with the domain name with the email with authentic IP address. This is how reverse DNS lookup. If the email sent is not matching with the authentic IP address  then the email will be flagged into spam.
+
+TXT RECORD:
+TXT or text this record contains miscellaneous information about the domain such as general or contact information. These are also used to prevent email spam by making sure incoming email is coming from a trusted or authorized source
+
+ROUTE 53 MULTIVALUE ROUTING :
+Multi value routing aims to improve more availabiliy by allowing more active approach to DNS. This is used when you have multi resources and all service requests and all need to be health checked, So any healthy record will be returned and if there are more healthy records then the random healthy record will be retruned.
+
+WEIGHTED ROUTING : 
+This is another routing polocy and is used when you want simple form of load balancing or when you want to test new versions of software. Lets say we are having a hosted zone with 3 records and these records are allocated with record weights lets say 40 40 and 20 now this record weight indicated that the record is returned that many times record with record weight 40 will be returned 40% and records weight with 20 will be returned 20% and as such and if you come across any unhealthy record this process repeated untill we find  healthy record.
+
+R53 LATENCY ROUTING : 
+This is another routing policy, Lets say we have 3 records in 3 different regions with 3 different latencies and a user from another region wants to acess a record now the record with lowest latency will be provided to the user and if the record with lowest latency is unhealthy then the record with second lowest latency will be provided.
  
+***********************************************************************************************************************************************************************************
+
+AMAZON RDS:
+
+Databases are the systems which store and manage the data. A relational database system is a type of database management system (DBMS) that organizes data into tables with rows and columns, and establishes relationships between these tables based on common attributes. Amazon Relational Database Service (Amazon RDS) is a web service that makes it easier to set up, operate, and scale relational databases in the cloud.These are broadly split into relational and non relational databases systems. Relational database systems refers to relational database platforms here the data is stored in very structured form.  This structure is known as schema and this is fixed and rigid. This defines the names of things and values of things which needs to be stored and where need to be stored.  The relationship between the tables is fixed before entering the data and cannot be changed. Amazon DynamoDB is a fully managed NoSQL database service that offers fast and flexible document and key-value storage with seamless scalability and low latency. DynamoDB is ideal for applications that require fast and flexible NoSQL database capabilities, while RDS is suitable for applications that require the traditional relational database model and SQL querying.
+
+DATA SOURCE TYPES : 
+
+STRUCTURED DATA : 
+
+Structured data is stored as a series of data values in a relatable tables managed by a database engine. This is highly organized, easy to analyze, and able to be used in highly complexed queries.
+
+REAL TIME EXAMPLE : The real time example for structured data is CRM ( customer relationship management), IN CRM customer details, sales order, transactional details and support tickets  in these cases  the data needs to be in a organized and associated way so that the data of the customer can be stored according to their details in tables with a relational database. Each table represents a specific entity (e.g., customers, orders, products) with well-defined relationships between them.  This structured data can be easily queried, analyzed, and used to generate reports.
+
+UNSTRUCTURED DATA : 
+
+This is stored in file store or object store such as S3 buckets this lacks the predefined structure and need to have special tools to query the data. 
+
+REAL TIME EXAMPLE : 
+
+Social media platforms like Facebook, instagram, twitter use unstructured data in form of posts or comments or likes here then data do not have any predefined structure and are stored in file store or object store such as Amazon S3. Special tools such as trend analysis, model detection are used to analyze the unstructured data.
+
+SEMI STRUCTURED DATA :
+
+Semistructured data is stored in JSON files that are loaded into a database engine. This data is highly flexible because the structure is not strict and can be changed as needed within the table. Semistructured data can be analyzed but not with the same level of complexity that analytics on structured data can achieve.
+
+REAL TIME EXAMPLE :
+
+In IOT applications the data generated by different sensors such as temperature, humidity, gps etc are stored in semi structured format. where each sensor produce data in different formats and these are stored into databases.
+
+RELATIONAL DATABASE SYSTEMS : 
+
+These used to store the data in rows,  columns and tables and relate in between these tables so that the data can be accessed easily. In database transactions there are two ways of organizing information. 1) )online transaction processing 2) online analytical processing.
+
+OLTP :  
+
+Online transaction process this focuses on insertion, deletion, updating of data transactions. These are very simple and short and require very less time and space to process.
+Best example for this is bank transaction or any e-commerce website where you will add the orders to cart, place the order and do frequent changes and this changes are updated in the database. Here changes are made very frequently hence an OLTP.
+
+OLAP :
+
+This  database store the historical data from OLTP and use it to analyze and extract information for good decision making. The best example for this is a vast sales data which is used to compare the sales between two products or growth or downfall of a products sale or as such.
+
+AMAZON RDS :
+
+Amazon Relational Database Service (Amazon RDS) is a service that makes it easier to set up, operate, and scale a relational database in the cloud. It provides cost-efficient, resizable capacity for an industry-standard relational database and manages common database administration tasks.
+
+.Amazon RDS was designed to help you reduce the infrastructure costs associated with running and managing databases, improve the time it takes to develop applications, and create value using analytics and machine learning services. Amazon RDS is a relational database service. Relational databases use schemas to normalize data. They reduce their storage costs with these schemas.  Amazon RDS provides enhanced availability and durability through the use of Multi-AZ deployments. This means that Amazon RDS creates multiple instances of the databases in different Availability Zones. In the case of an infrastructure failure, Amazon RDS performs an automatic failover to the standby in another Availability Zone. Database operations resume as soon as the failover is complete.
+
+When you build your first Amazon RDS database, you have to make a few key decisions. First is the database instance type, which determines the resources your database will have. Next is the type of database engine you want to run. You can choose from Amazon Aurora, PostgreSQL, MySQL, MariaDB, Oracle Database, or SQL Server. Each database engine has its own unique characteristics and features.Amazon RDS stores data in the form of tables, records, and fields. Now in most tables, records must be unique. You can do this by creating a numeric field containing unique values. This is called a primary key. Primary key values from one table can be added to other tables. This creates a relationship. Relationships are one of the distinguishing benefits of relational databases.
+
+The basic building block of Amazon RDS is the database instance class. When you create a database instance, you choose a database engine to run—like PostgreSQL or Amazon Aurora. The database engine manages and runs all of the database operations. Another important consideration is the instance class. This determines how much memory, CPU, and I/O capabilities, in terms of network and storage throughput, will be available to the database engine. 
+
+Amazon RDS can be secured by ,
+
+minimizing the access to the database by placing it in the VPC and sometimes you need to accept the requests directly from the internet so in this you can create a internet gateway.
+
+Second, controlling access to the database instance. Security groups are used to control access to a database instance.
+
+Securing communications to and from the database instance. This is known as data in transit. This is accomplished by using HTTPS connections.
+
+These connections are encrypted using Secure Sockets Layer, or SSL. protecting data in the database. This is known as data at rest. Amazon RDS uses the industry-standard AES-256 bit encryption algorithm to encrypt the data while at rest.
+
+
+
+AMAZON AURORA :
+
+ Aurora is structured in the same way other relational database engines are. It stores data in the form of tables, records, and fields. Aurora automatically maintains six copies of your data across three Availability Zones and will automatically attempt to recover the database in a healthy Availability Zone with no data loss. You can create up to 15 read replicas that can serve read-only traffic as well as failover. Let’s discuss a few of Aurora’s benefits. Aurora is a fully managed system by Amazon RDS. You no longer need to worry about database management tasks such as hardware provisioning, software patching, setup, configuration, or backups. Aurora automatically backs up your database to Amazon S3, enabling granular point-in-time recovery. Aurora is built for high performance and scalability. You can get five times the throughput of standard MySQL and three times the throughput of standard PostgreSQL databases with Amazon Aurora. This performance is on par with commercial databases, at a tenth of the cost. Aurora provides multiple levels of security for your database, including isolation, encryption at rest, and encryption in transit. Amazon Aurora Serverless is an on-demand, auto scaling configuration for the MySQL-compatible edition of Aurora. It was designed to enable databases to run in the cloud without managing individual database instances.
+
+NON- RELATIONAL DATABASES :
+
+Semistructured and unstructured data are often stored in non-relational database systems, sometimes called NoSQL databases. It is important to remember that SQL is a way of querying data. It implies precise structure. Non-relational or NoSQL does not mean the data stored cannot be queried using SQL. A better way to think of the term "NoSQL" is "not only SQL."
+
+AMAZON ELASTIC CACHE :
+One can use amazon elastic cache to improve the performance of the application by retrieving data from high throughput and low latency in-memory data stores. If an application is running slow and need to improve its performance then you can use amazon elastic cache and this is a popular choice for gaming, advertising technology (ad tech), financial service, healthcare, and Internet of Things (IoT) apps.
+AMAZON DYNAMIC DB :
+Amazon DynamoDB can handle more than 10 trillion requests per day and support peaks of more than 20 million requests per second. More than 100,000 AWS customers have chosen DynamoDB as their key-value database for mobile, web, gaming, ad tech, IoT, and other applications that need low-latency data access at any scale. DynamoDB supports ACID-compliant transactions.
+
+AMAZON NEPTUNE :
+Amazon Neptune is a fast, reliable, fully managed graph database service that makes it easy to build and run applications that work with highly connected data sets used to discover potential fraudulent behavior before it happens. This starts with finding interactions between products, locations, and devices and then mapping those data points to individual users, customers, and/or employees.
+Neptune graph use cases include recommendation engines, fraud detection, knowledge graphs, drug discovery, and network security.
+
+AMAZON DOCUMENT DB :
+Amazon DocumentDB is a fast, reliable, and fully managed database service that allows you to set up, operate, and scale MongoDB-compatible databases in the cloud. With Amazon DocumentDB, you can run the same application code and use the same drivers and tools that you use with MongoDB.
+Amazon DocumentDB is used for storing semistructured data as a document, rather than normalizing data across multiple tables, each with a unique and fixed structure, as in a relational database. Documents stored in a document database use nested key-value pairs to provide the document's schema.DynamoDB supports some of the world’s largest scale applications by providing consistent, single-digit millisecond response times at any scale. You can build applications that grow as needed with virtually unlimited throughput and storage.
+With DynamoDB, there are no servers to provision, patch, or manage, and there's no software to install, maintain, or operate. DynamoDB automatically scales up and down to adjust for the capacity and maintain performance of your systems. Availability and fault tolerance are built in, eliminating the need to architect your applications for these capabilities. The service stores data in the form of tables, items, and attributes. When you create a table, you define a partition key attribute to uniquely identify each item in that table. This way, no two items can have the same key. You can also assign other attributes, like a sort key attribute.
+DynamoDB makes a suitable platform for many different use cases, including providing game companies with scalability and millisecond response times. d All games can take advantage of DynamoDB, whether they’re played on mobile devices, a console, or the desktop. They can store game state, user profiles, and a user’s inventory as well as purchases
+
+
+Non- Relational Database Types:
+
+Key-value databases : Key-value databases logically store data in a single table. Within the table, the values are associated with a specific key and stored in the form of blob objects without a predefined schema. The values can be of nearly any type.
+
+Document Databases : Document stores keep files containing data as a series of elements. These files can be navigated using numerous languages including Python and Node.js. Each element is an instance of a person, place, thing, or event. For example, a document store may hold a series of log files from a set of servers. These log files can each contain the specifics for that system without concern for what the log files in other systems contain.
+
+In-memory databases :In-memory databases are used for applications that require real-time access to data. Most databases have areas of data that are frequently accessed but seldom updated. Additionally, querying a database is always slower and more expensive than locating a key in a key-value pair cache. Some database queries are especially expensive to perform. By caching such query results, you pay the price of the query once and then are able to quickly retrieve the data multiple times without having to re-execute the query.
+
+Graph Databases : Graph databases store data as nodes, while edges store information on the relationships between nodes. Data within a graph database is queried using specific languages associated with the software tool you have implemented. Review the Understanding graph relationships section below for more information.
+The AWS graph database service is called Amazon Neptune. It’s a fast, reliable, fully managed graph database service that makes it easy to build and run applications that work with highly connected datasets.Graph databases are purpose-built to store any type of data, whether it’s structured, semistructured, or unstructured. The purpose for organization in a graph database is to navigate the relationships. Data within the database is queried using a specific language associated with the software tools you have implemented.
+
+DATABASE ARCHITECTURES -------   1) Server Based Architecture 2) Serverless Architecture
+
+1) Server Based Architecture : In a server-based architecture, you provision and manage a dedicated database server instance (virtual machine) to host your database. With server-based architecture, you are responsible for tasks such as server maintenance, patching, backups, and scaling.
+
+2) Serverless Architecture : In a serverless architecture, you do not need to provision or manage database server instances explicitly. Instead, the database service automatically handles server provisioning, scaling, and maintenance on your behalf.
+With serverless architecture, you pay only for the resources consumed by your database on a per-request. 
+
+Data Migration :
+
+Managing on-premises and cloud-based databases to run at scale, with high availability and reliability is a difficult, time-consuming, and expensive undertaking. Migrating your databases and data warehouses to AWS allows you to take advantage of a portfolio of fully managed, high-performance, and cost-effective databases. There are several AWS tools and services to migrate data from an external database to AWS. AWS Database Migration Service (AWS DMS) helps you migrate databases to AWS efficiently and securely. The source database can remain fully operational during the migration, minimizing downtime to applications. At its most basic level, AWS DMS is an instance in the AWS Cloud that runs replication software.
+***********************************************************************************************************************************************************************************
+
+DYNAMO DB
+
+DYNAMO DB :
+
+DynamoDB is a NoSQL fully managed Database-as-a-Service (DBaaS) product available within AWS.  DynamoDB is a NoSQL database that supports key-value and document data models. Developers can use DynamoDB to build modern, serverless applications that start small and scale globally. These applications can support petabytes of data and tens of millions of read/write requests per second. DynamoDB is designed to run high-performance, internet-scale applications that might overburden traditional relational databases. DynamoDB is fully managed and offloads the administrative tasks of operating and scaling a distributed database. DynamoDB also offers encryption at rest, which helps eliminate the operational tasks involved in protecting sensitive data.
+
+Advantages:
+
+---> Millisecond performance and automatic multi-Region replication.
+--->Data encryption at rest and automatic backup and restore.
+---> Fully managed serverless database.
+---> Integration with other AWS services for analytics and performance or traffic monitoring.
+
+WHY DYNAMO DB ? 
+
+We may have other services like RDS but dynamo db is preferred in cases like low latency and high throughput where dynamo db has unlimited throughput and also server less. DynamoDB overcomes several challenges compared to other database services, making it well-suited for real-time, high-throughput, and scalable applications such as social media platforms. Its seamless scalability, performance, managed service offering, high availability, durability, and schema flexibility are critical factors in ensuring a smooth and reliable user experience.
+
+HOW DYNAMO DB WORKS ?
+
+Tables:- As with other database systems, DynamoDB stores data in tables. A table is a collection of data. For example, you might have a table called People that you could use to store personal contact information about solutions architects, business partners, or others. You could also have a Locations table to store information about your office buildings. 
+
+Items:- Each table contains zero or more items. An item is a group of attributes that is uniquely identifiable among all other items. In a People table, each item represents a person. For a Locations table, each item represents one building. Items in DynamoDB are similar in many ways to rows, records, or tuples in other database systems. In DynamoDB, there is no limit to the number of items you can store in a table.
+
+Attributes :- Each item is composed of one or more attributes. An attribute is a fundamental data element, something that does not need to be broken down any further. For example, an item in a People table contains attributes called PersonID, LastName, FirstName, and so on. For a Department table, an item might have attributes such as DepartmentID, Name, Manager, and so on. Attributes in DynamoDB are similar in many ways to fields or columns in other database systems.
+
+Primary Key :- When you create a table, in addition to the table name, you must specify the primary key of the table. The primary key uniquely identifies each item in the table so that no two items can have the same key. DynamoDB supports two kinds of primary keys: a partition key and a partition key plus sort key.
+
+Secondary Indexes : You can create one or more secondary indexes on a table. Using a secondary index, you can query the data in the table using an alternate key and also against the primary key. DynamoDB doesn't require that you use indexes, but they provide more flexibility when querying data. After you create a secondary index on a table, you can read data from the index in much the same way as you do from the table. DynamoDB supports two kinds of indexes:
+
+Global secondary index – An index with a partition key and sort key that can be different from those on the table
+Local secondary index – An index that has the same partition key as the table but a different sort key
+Each table in DynamoDB has a quota of 20 global secondary indexes (default quota) and five local secondary indexes.
+
+DynamoDB Streams:- DynamoDB Streams is an optional feature that captures data modification events in DynamoDB tables. The data about these events appear in the stream in near real time, and in the order that the events occurred. Each event is represented by a stream record. If you enable a stream on a table, DynamoDB Streams writes a stream record whenever one of the following events occurs:
+
+A new item is added to the table: The stream captures an image of the entire item, including all of its attributes
+An item is updated: The stream captures the before and after image of any attributes that were modified in the item
+An item is deleted from the table: The stream captures an image of the entire item before it was deleted
+Each stream record also contains the name of the table, event timestamp, and other metadata. Stream records have a lifetime of 24 hours, after which they are automatically removed from the stream.
+
+
+Read Capacity Units (RCU):
+
+RCU represents the number of read operations per second that a DynamoDB table can support. One RCU is equal to one strongly consistent read per second for items up to 4 KB in size, or two eventually consistent reads per second for items up to 4 KB in size.
+Strongly consistent reads ensure that the most recent data is retrieved, while eventually consistent reads may return data that is slightly stale but are less resource-intensive.
+The number of RCUs required for a specific workload depends on factors such as the number and size of items being read, the consistency requirements, and any additional query conditions or indexes.
+
+Write Capacity Units (WCU):
+
+WCU represents the number of write operations per second that a DynamoDB table can support. One WCU is equal to one write operation per second for items up to 1 KB in size.
+Write operations include inserts, updates, and deletes of items in the table. The size of the item being written affects the number of WCUs consumed, with larger items consuming more WCUs.
+The number of WCUs required for a specific workload depends on factors such as the write throughput, the size of the items being written, and any additional conditions or indexes.
+When creating or modifying a DynamoDB table, you specify the desired number of RCUs and WCUs based on your application's read and write throughput requirements. DynamoDB automatically scales the provisioned throughput capacity up or down in response to changes in traffic patterns, ensuring that the table can handle the required workload efficiently.
+
+Throttling :- Throttling is the action of limiting the number of requests that a client can submit to a given operation in a given amount of time. Throttling prevents your application from consuming too many capacity units. When a request is throttled, it fails with an HTTP 400 Bad Request error and a ProvisionedThroughputExceededException.
+
+Real Time Scenario : 
+
+Consider a social media platform that needs to store and serve user-generated content, such as posts, comments, and likes, to millions of users worldwide. Here's how DynamoDB overcomes challenges compared to other database services:
+
+---> Scalability,The social media platform experiences fluctuating traffic patterns throughout the day, with peak usage during certain hours. DynamoDB's seamless scalability allows it to handle sudden spikes in traffic without manual intervention, ensuring that the platform remains responsive to user requests.
+
+--->Performance, Users expect near-instantaneous response times when interacting with the social media platform. DynamoDB's consistently low-latency access to data ensures that users can quickly view posts, comment on content, and engage with other users without experiencing delays.
+
+---> Managed Service, Managing infrastructure for a social media platform with millions of users would be a daunting task. With DynamoDB as a fully managed service, the platform's development team can focus on building features and improving user experience, rather than worrying about infrastructure management.
+
+--->High Availability and Durability, The social media platform cannot afford downtime or data loss, as it would result in a poor user experience and loss of trust from users. DynamoDB's built-in high availability and durability ensure that user data is always accessible and protected, even in the event of hardware failures or regional outages.
+
+COMPARING AMAZONDB WITH OTHER AWS DABASE SERIVICES:
+
+Amazon DynamoDB:
+
+Fully managed NoSQL database service.
+Provides seamless scalability with automatic scaling of throughput capacity.
+Optimized for high performance, single-digit millisecond latency, and consistent throughput.
+Schemaless design allows for flexible data modeling.
+Offers built-in features for security, backup and restore, and global replication.
+Suitable for a wide range of use cases, including web and mobile applications, gaming, IoT, and real-time analytics.
+
+Amazon Neptune:
+
+Fully managed graph database service.
+Optimized for storing and querying highly connected data with complex relationships.
+Supports graph query languages such as Gremlin and SPARQL.
+Ideal for applications requiring network analysis, recommendation engines, and social networks.
+
+Amazon DocumentDB (with MongoDB compatibility):
+
+Fully managed document database service compatible with MongoDB API.
+Designed for storing, querying, and indexing JSON-like documents.
+Provides scalability, high availability, and backup and restore capabilities.
+Suitable for applications with document-oriented data models and existing MongoDB workloads.
+
+Amazon Keyspaces (for Apache Cassandra):
+
+Fully managed Apache Cassandra-compatible database service.
+Designed for wide-column store capabilities and scalable, distributed data storage.
+Supports Apache Cassandra Query Language (CQL) and integrates with existing Cassandra applications.
+Suitable for applications requiring high availability, scalability, and fault tolerance.
+
+Amazon Timestream:
+
+Fully managed time-series database service.
+Optimized for storing and analyzing time-series data such as sensor readings and logs.
+Offers automatic scaling, retention policies, and built-in time-series functions.
+Ideal for applications with real-time data ingestion and analytics requirements.
+
+Amazon QLDB:
+
+Fully managed ledger database service.
+Provides a transparent, immutable, and cryptographically verifiable transaction log.
+Designed for applications requiring a centralized, tamper-proof ledger for maintaining data integrity and auditability.
+
+ Amazon DynamoDB is preferred over other database services in AWS for several reasons:
+
+DynamoDB offers seamless scalability, high performance, and low-latency access to data.
+Its fully managed nature reduces operational overhead and simplifies database administration.
+DynamoDB's flexible data model accommodates evolving application requirements without the need for schema changes.
+It is suitable for a wide range of use cases, including web and mobile applications, gaming, IoT, and real-time analytics.
+
+Use Case: 
+
+Consider a real-time gaming application that requires low-latency data access, seamless scalability, and flexible data modeling. DynamoDB is an ideal choice for storing player profiles, game states, and in-game transactions due to its high performance, scalability, and schemaless design. With DynamoDB, the gaming application can handle fluctuating user loads, deliver real-time updates, and provide a responsive gaming experience to players worldwide.
+
+***********************************************************************************************************************************************************************************
+
+DYNAMO DB :
+
+DynamoDB is a NoSQL fully managed Database-as-a-Service (DBaaS) product available within AWS.  DynamoDB is a NoSQL database that supports key-value and document data models. Developers can use DynamoDB to build modern, serverless applications that start small and scale globally. These applications can support petabytes of data and tens of millions of read/write requests per second. DynamoDB is designed to run high-performance, internet-scale applications that might overburden traditional relational databases. DynamoDB is fully managed and offloads the administrative tasks of operating and scaling a distributed database. DynamoDB also offers encryption at rest, which helps eliminate the operational tasks involved in protecting sensitive data.
+
+Advantages:
+
+---> Millisecond performance and automatic multi-Region replication.
+--->Data encryption at rest and automatic backup and restore.
+---> Fully managed serverless database.
+---> Integration with other AWS services for analytics and performance or traffic monitoring.
+
+WHY DYNAMO DB ? 
+
+We may have other services like RDS but dynamo db is preferred in cases like low latency and high throughput where dynamo db has unlimited throughput and also server less. DynamoDB overcomes several challenges compared to other database services, making it well-suited for real-time, high-throughput, and scalable applications such as social media platforms. Its seamless scalability, performance, managed service offering, high availability, durability, and schema flexibility are critical factors in ensuring a smooth and reliable user experience.
+
+HOW DYNAMO DB WORKS ?
+
+Tables:- As with other database systems, DynamoDB stores data in tables. A table is a collection of data. For example, you might have a table called People that you could use to store personal contact information about solutions architects, business partners, or others. You could also have a Locations table to store information about your office buildings. 
+
+Items:- Each table contains zero or more items. An item is a group of attributes that is uniquely identifiable among all other items. In a People table, each item represents a person. For a Locations table, each item represents one building. Items in DynamoDB are similar in many ways to rows, records, or tuples in other database systems. In DynamoDB, there is no limit to the number of items you can store in a table.
+
+Attributes :- Each item is composed of one or more attributes. An attribute is a fundamental data element, something that does not need to be broken down any further. For example, an item in a People table contains attributes called PersonID, LastName, FirstName, and so on. For a Department table, an item might have attributes such as DepartmentID, Name, Manager, and so on. Attributes in DynamoDB are similar in many ways to fields or columns in other database systems.
+
+Primary Key :- When you create a table, in addition to the table name, you must specify the primary key of the table. The primary key uniquely identifies each item in the table so that no two items can have the same key. DynamoDB supports two kinds of primary keys: a partition key and a partition key plus sort key.
+
+Secondary Indexes : You can create one or more secondary indexes on a table. Using a secondary index, you can query the data in the table using an alternate key and also against the primary key. DynamoDB doesn't require that you use indexes, but they provide more flexibility when querying data. After you create a secondary index on a table, you can read data from the index in much the same way as you do from the table. DynamoDB supports two kinds of indexes:
+
+Global secondary index – An index with a partition key and sort key that can be different from those on the table
+Local secondary index – An index that has the same partition key as the table but a different sort key
+Each table in DynamoDB has a quota of 20 global secondary indexes (default quota) and five local secondary indexes.
+
+DynamoDB Streams:- DynamoDB Streams is an optional feature that captures data modification events in DynamoDB tables. The data about these events appear in the stream in near real time, and in the order that the events occurred. Each event is represented by a stream record. If you enable a stream on a table, DynamoDB Streams writes a stream record whenever one of the following events occurs:
+
+A new item is added to the table: The stream captures an image of the entire item, including all of its attributes
+An item is updated: The stream captures the before and after image of any attributes that were modified in the item
+An item is deleted from the table: The stream captures an image of the entire item before it was deleted
+Each stream record also contains the name of the table, event timestamp, and other metadata. Stream records have a lifetime of 24 hours, after which they are automatically removed from the stream.
+
+
+Read Capacity Units (RCU):
+
+RCU represents the number of read operations per second that a DynamoDB table can support. One RCU is equal to one strongly consistent read per second for items up to 4 KB in size, or two eventually consistent reads per second for items up to 4 KB in size.
+Strongly consistent reads ensure that the most recent data is retrieved, while eventually consistent reads may return data that is slightly stale but are less resource-intensive.
+The number of RCUs required for a specific workload depends on factors such as the number and size of items being read, the consistency requirements, and any additional query conditions or indexes.
+
+Write Capacity Units (WCU):
+
+WCU represents the number of write operations per second that a DynamoDB table can support. One WCU is equal to one write operation per second for items up to 1 KB in size.
+Write operations include inserts, updates, and deletes of items in the table. The size of the item being written affects the number of WCUs consumed, with larger items consuming more WCUs.
+The number of WCUs required for a specific workload depends on factors such as the write throughput, the size of the items being written, and any additional conditions or indexes.
+When creating or modifying a DynamoDB table, you specify the desired number of RCUs and WCUs based on your application's read and write throughput requirements. DynamoDB automatically scales the provisioned throughput capacity up or down in response to changes in traffic patterns, ensuring that the table can handle the required workload efficiently.
+
+Throttling :- Throttling is the action of limiting the number of requests that a client can submit to a given operation in a given amount of time. Throttling prevents your application from consuming too many capacity units. When a request is throttled, it fails with an HTTP 400 Bad Request error and a ProvisionedThroughputExceededException.
+
+Real Time Scenario : 
+
+Consider a social media platform that needs to store and serve user-generated content, such as posts, comments, and likes, to millions of users worldwide. Here's how DynamoDB overcomes challenges compared to other database services:
+
+---> Scalability,The social media platform experiences fluctuating traffic patterns throughout the day, with peak usage during certain hours. DynamoDB's seamless scalability allows it to handle sudden spikes in traffic without manual intervention, ensuring that the platform remains responsive to user requests.
+
+--->Performance, Users expect near-instantaneous response times when interacting with the social media platform. DynamoDB's consistently low-latency access to data ensures that users can quickly view posts, comment on content, and engage with other users without experiencing delays.
+
+---> Managed Service, Managing infrastructure for a social media platform with millions of users would be a daunting task. With DynamoDB as a fully managed service, the platform's development team can focus on building features and improving user experience, rather than worrying about infrastructure management.
+
+--->High Availability and Durability, The social media platform cannot afford downtime or data loss, as it would result in a poor user experience and loss of trust from users. DynamoDB's built-in high availability and durability ensure that user data is always accessible and protected, even in the event of hardware failures or regional outages.
+
+COMPARING AMAZONDB WITH OTHER AWS DABASE SERIVICES:
+
+Amazon DynamoDB:
+
+Fully managed NoSQL database service.
+Provides seamless scalability with automatic scaling of throughput capacity.
+Optimized for high performance, single-digit millisecond latency, and consistent throughput.
+Schemaless design allows for flexible data modeling.
+Offers built-in features for security, backup and restore, and global replication.
+Suitable for a wide range of use cases, including web and mobile applications, gaming, IoT, and real-time analytics.
+
+Amazon Neptune:
+
+Fully managed graph database service.
+Optimized for storing and querying highly connected data with complex relationships.
+Supports graph query languages such as Gremlin and SPARQL.
+Ideal for applications requiring network analysis, recommendation engines, and social networks.
+
+Amazon DocumentDB (with MongoDB compatibility):
+
+Fully managed document database service compatible with MongoDB API.
+Designed for storing, querying, and indexing JSON-like documents.
+Provides scalability, high availability, and backup and restore capabilities.
+Suitable for applications with document-oriented data models and existing MongoDB workloads.
+
+Amazon Keyspaces (for Apache Cassandra):
+
+Fully managed Apache Cassandra-compatible database service.
+Designed for wide-column store capabilities and scalable, distributed data storage.
+Supports Apache Cassandra Query Language (CQL) and integrates with existing Cassandra applications.
+Suitable for applications requiring high availability, scalability, and fault tolerance.
+
+Amazon Timestream:
+
+Fully managed time-series database service.
+Optimized for storing and analyzing time-series data such as sensor readings and logs.
+Offers automatic scaling, retention policies, and built-in time-series functions.
+Ideal for applications with real-time data ingestion and analytics requirements.
+
+Amazon QLDB:
+
+Fully managed ledger database service.
+Provides a transparent, immutable, and cryptographically verifiable transaction log.
+Designed for applications requiring a centralized, tamper-proof ledger for maintaining data integrity and auditability.
+
+ Amazon DynamoDB is preferred over other database services in AWS for several reasons:
+
+DynamoDB offers seamless scalability, high performance, and low-latency access to data.
+Its fully managed nature reduces operational overhead and simplifies database administration.
+DynamoDB's flexible data model accommodates evolving application requirements without the need for schema changes.
+It is suitable for a wide range of use cases, including web and mobile applications, gaming, IoT, and real-time analytics.
+
+Use Case: 
+
+Consider a real-time gaming application that requires low-latency data access, seamless scalability, and flexible data modeling. DynamoDB is an ideal choice for storing player profiles, game states, and in-game transactions due to its high performance, scalability, and schemaless design. With DynamoDB, the gaming application can handle fluctuating user loads, deliver real-time updates, and provide a responsive gaming experience to players worldwide.
+
+***********************************************************************************************************************************************************************************
+
+EKS & ECS 
+
+Why ECS came into picture ?
+
+Virtualization is a process of running more than one O.S with multiple applications on a single hardware or single server which is very effective. This process of functioning multiple O.S with different application can be done using hypervisor. A server with its O.S as such multiple servers with their different O.S are functioned to be run on a single hypervisor.  A hypervisor is a layer that enables multiple operating systems or virtual machines to run on a single physical machine or server hardware. 
+
+Limitation :  In virtualization multiple O.S run with multiple applications simultaneously, but the drawback is the O.S occupies the majority of the resources, The most of the virtual machine is taken by the O.S. Lets say for example if you run a virtual machine with 4GB  RAM and 14GB disk then 60-70% of it and most of the remaining storage is occupied by the O.S, leaving little for the applications and runtime environments So, This effects the every operation such as start, stop and restart to manipulate the resources. So, inorder to overcome this we use Elastic Container Service.
+
+What is ECS ?
+
+Amazon ECS is a fully managed container orchestration service provided by Amazon Web Services (AWS). It allows you to run, manage, and scale Docker containers in the cloud without needing to manage the underlying infrastructure. an "orchestration service" refers to a set of tools and capabilities that automate the deployment, management, and scaling of containers. Orchestration involves coordinating and managing the lifecycle of containerized applications, including tasks such as provisioning resources, scheduling containers on available infrastructure, monitoring container health, and handling failover and scaling as needed.
+
+
+What are Docker Containers?
+
+Think of Docker containers as lightweight, portable, and self-sufficient packages that contain everything your application needs to run smoothly. They encapsulate your application code, its dependencies (like libraries and frameworks), and even the runtime environment (like the operating system components) into a single package.Consider a shipping container used in transportation. It's a standardized box that can hold various types of goods. Docker containers work similarly. They provide a standardized way to package and run applications, regardless of the underlying infrastructure.
+
+Advantages of Docker Containers:
+
+Portability: Docker containers can run consistently across different environments, whether it's your local development machine, a testing server, or a production server. This ensures that your application behaves the same way everywhere.
+Isolation: Each Docker container operates independently of others, providing a level of isolation. This means that changes or issues in one container won't affect others, enhancing security and reliability.
+Resource Efficiency: Docker containers share the same underlying operating system kernel, which reduces resource overhead compared to traditional virtual machines. This allows you to run more containers on the same hardware without sacrificing performance.
+
+How ECS Overcomes Virtualization Drawbacks ?
+
+ECS uses Docker containers to package and run applications. Containers are isolated from each other but share the same OS kernel. This means they consume fewer resources compared to VMs since they don't each need their own complete OS. ECS uses containerization instead of virtualization, which results in better resource utilization and efficiency. Containers share the host operating system kernel, reducing the overhead compared to virtual machines. Containers typically have lower overhead compared to virtual machines, leading to better performance and faster startup times. ECS allows you to pack more containers onto a single host without sacrificing performance. ECS containers typically store their files and data within the container itself or in external storage solutions such as Amazon EBS (Elastic Block Store) or Amazon EFS (Elastic File System). ECS does not provide long-term storage for containers; instead, it relies on external storage services for persistent data storage.
+
+Concepts of ECS : ECS Cluster, Task Definition, , Container Instance, Service.
+
+ECS Cluster, 
+An Amazon ECS cluster is a logical grouping of tasks or services managed by ECS.
+
+Example:
+
+Cluster 1: Development Cluster
+
+Purpose: Used by developers for testing and development purposes.
+Configuration: This cluster consists of smaller EC2 instances optimized for cost-effectiveness in a non-production environment. It has limited resources allocated.
+Services: Each microservice has its own task definition running on this cluster, allowing developers to test changes independently.
+
+Cluster 2: Production Cluster
+
+Purpose: Hosts the live production environment of the e-commerce application.
+Configuration: This cluster consists of larger, more powerful EC2 instances or utilizes AWS Fargate for better scalability and performance in a production environment. It has resources allocated to handle the expected production workload.
+Services: Each microservice has its own service running on this cluster, ensuring high availability, fault tolerance, and scalability of the production application.
+
+
+Task Definition:
+
+Role: Defines the configuration for running a containerized application.
+Example: We define task definitions for each component of our e-commerce website, such as a task for the frontend web server, a task for the backend database, a task for handling payment processing, etc.
+
+Container Instance:
+
+Role: Represents the underlying compute resources (EC2 instances or AWS Fargate) where tasks are run.
+Example: ECS manages a fleet of EC2 instances or AWS Fargate containers to host the tasks of our e-commerce website. These instances handle the execution of Docker containers that make up our website's components.
+
+Service:
+
+Role: Ensures that a specified number of tasks are running and maintains their desired state within an ECS cluster.
+Example: We define services to manage the lifecycle of tasks for critical components of our e-commerce website, such as the frontend web server. The service ensures that the desired number of tasks are always running, automatically replacing any failed tasks to maintain availability.
+
+
+
+EKS_____Elastic Kubernetes Service :
+
+Kubernetes, also known as K8s, is an open-source system for automating deployment, scaling, and management of containerized applications. It simplifies the process of deploying, managing, and scaling containerized applications using Kubernetes on AWS infrastructure.
+
+Kubernetes Cluster :  
+
+--> A cluster in kubernetes is a highly available cluster of compute resource and these are organized to work as one unit. 
+--> The cluster starts with cluster control plane, It manages the cluster scheduling, applications, scaling and deploying. 
+-->Compute within K8 cluster provided by VM nodes, these are virtual or physical servers which function as worker in the cluster, these are the things that run containerized applications, These contains containerd or docker software for handling container operations and next we have Kubelet.
+--> Kubelet is an agent to interact with the cluster control plane using k8 API
+
+***********************************************************************************************************************************************************************************
+
+CLOUD FORMATION:
+
+CloudFormation 
+
+AWS CloudFormation is a service provided by Amazon Web Services (AWS) that enables users to provision and manage a collection of AWS resources in a predictable and repeatable manner. It allows you to define your infrastructure in a declarative template format, called a CloudFormation template, using JSON or YAML syntax. These templates can describe a wide range of AWS resources such as EC2 instances, S3 buckets, RDS databases, IAM roles, and more.
+
+Let's simplify the definition, for example you need to build an infrastructure for an e-commerce website where you use EC2, S3, EBS, etc. Now if you try to create  these each one and connect them manually takes a lot of time and may also lead to infrastructure failure So, this can be easily done by the CloudFormation service where you write and describe your infrastructure in json or yaml by mentioning all your resources and then CloudFormation manages and builds your infrastructure  and if you need to make any changes or update the infrastructure you can make changes for the stack and update the template.
+
+CloudFormation allows you to treat your infrastructure as code, enabling you to version-control, review, and replicate your infrastructure changes in a controlled and efficient manner. CloudFormation automatically determines the order in which resources need to be provisioned and updated based on their interdependencies specified in the template.CloudFormation tracks changes to your infrastructure over time and allows you to perform updates in a controlled manner, minimizing downtime and disruption. If a stack update fails, CloudFormation can automatically roll back to the previous known stable state, ensuring that your infrastructure remains in a consistent state. Resources provisioned by CloudFormation are organized into stacks, which represent a single unit of deployment and management. Stacks can be created, updated, or deleted as a whole. StackSets allow you to provision a CloudFormation stack across multiple AWS accounts and regions, making it easier to manage infrastructure across large-scale organizations. 
+
+CloudFormation with  Resources :
+
+CloudFormation by definition says that it can integrate with any third party resource, The infrastructure defined may need to have resources like GitHub, Docker/kubernetes, Terraform or Content Delivery Network Management which is widely used. CDNM  with CloudFormation, you can define CDN-related resources such as CloudFront distributions, origin configurations, cache behaviors, SSL certificates, and more in your CloudFormation templates. This allows you to provision and configure CDN resources in a repeatable and automated manner. So, Generally CF can be integrated with any kind of third party software which is required for the infrastructure.
+
+***********************************************************************************************************************************************************************************
+
+CLOUD WATCH
+
+AMAZON CLOUDWATCH : 
+
+Amazon CloudWatch is a monitoring and observability service provided by Amazon Web Services (AWS). It allows users to collect and track metrics, collect and monitor log files, set alarms, and automatically react to changes in AWS resources. For an instance, some application is running and the health of the application will be monitored on cloud watch and if something goes wrong it can be seen in cloud watch and can be solved.
+
+Features of Cloudwatch :
+
+Cloud Watch Metrics :
+
+ CloudWatch Metrics are numeric data points representing various attributes or characteristics of AWS resources or services over time. These attributes can include CPU utilization, network traffic, disk I/O, latency, error rates, etc. Metrics are collected at regular intervals, typically every few minutes, depending on the specific service or resource being monitored.  Metrics within a namespace can have dimensions, which are key-value pairs that further define the scope of the metric. For instance, an EC2 metric might have dimensions such as instance ID, instance type, availability zone, etc. Dimensions help in filtering and aggregating metrics.  Each data point within a metric is associated with a timestamp, indicating when the measurement was taken. This allows for time-series analysis of metric data over different time periods.You can visualize CloudWatch Metrics using CloudWatch Dashboards, which allow you to create custom graphs and charts to monitor the performance of your AWS resources and services in real-time. CloudWatch Metrics can be used to set alarms based on thresholds. You can define thresholds for specific metrics, and CloudWatch will trigger alarms when those thresholds are breached, allowing for proactive monitoring and alerting.
+
+Cloud Watch  Logs : 
+
+Amazon CloudWatch Logs is a service provided by Amazon Web Services (AWS) for monitoring, storing, and accessing log files from various AWS resources and applications. It offers a centralized location for managing logs, enabling users to easily monitor and troubleshoot issues across their AWS infrastructure. CloudWatch Logs allows you to collect log data from a variety of AWS services and resources, including Amazon EC2 instances, AWS Lambda functions, Amazon VPC flow logs, AWS CloudTrail logs, and more. This log data in CloudWatch Logs is organized into "log groups" and "log streams."  CloudWatch Logs provides real-time monitoring capabilities, allowing you to view log data as it is generated by your AWS resources and applications.
+
+Cloud Watch Alarms : 
+
+CloudWatch Alarms allow you to set thresholds on CloudWatch Metrics and trigger actions when those thresholds are breached. You can define thresholds for various metrics such as CPU utilization, network traffic, error rates, etc., depending on the AWS resource being monitored. Each alarm is configured with one or more thresholds, which can be specified as absolute values or as a percentage of the metric. When you set a threshold for a metric and during the function when the metric reaches the limit an alarm notification will be sent and if it crosses the limit the alarms will be sent recently to fix the metric.  When a CloudWatch Alarm enters the "ALARM" state (indicating that the threshold has been breached), it can trigger one or more predefined actions. These actions can include sending notifications via Amazon SNS (Simple Notification Service), triggering AWS Lambda functions, auto-scaling AWS resources, or initiating Amazon EC2 Auto Recovery. There are three stages in cloud watch alarm, OK state when the limit is within the threshold it is OK state and when the limit reaches the threshold it will be in ALARM STATE AND if there is not enough data to run a metric against threshold then it will be in DATA INSUFFICIENT state 
+
+Cloud Watch Events :
+
+CloudWatch Events supports a wide range of event sources within AWS, including but not limited to AWS services like Amazon EC2, Amazon S3, AWS Lambda, Amazon SQS, Amazon SNS,etc. CloudWatch Events uses event buses to route events to rules for processing. There are two types of event buses: default event buses and custom event buses. The default event bus captures events generated by AWS services within your account, while custom event buses allow you to ingest events from external sources or cross-account event sources.
+
+Cloud Watch Insights :
+
+Amazon CloudWatch Logs Insights is a feature within Amazon CloudWatch Logs that enables users to interactively search and analyze log data in real-time. CloudWatch Logs Insights allows users to query log data using a simple yet powerful query language. CloudWatch Logs Insights provides real-time analysis capabilities, allowing users to query and analyze log data as it is ingested into CloudWatch Logs. This enables users to detect and respond to events or issues in near real-time, helping to minimize downtime and improve operational efficiency.
+
+Amazon Event Bridge : 
+
+Amazon EventBridge is a serverless event bus service provided by Amazon Web Services (AWS) that makes it easy to connect applications together using events. It enables you to build event-driven architectures by decoupling application components and allowing them to communicate with each other through events. Amazon EventBridge uses event buses as communication channels for passing events between event sources and event targets. There are two types of event buses: default event buses and custom event buses. The default event bus is managed by AWS and captures events from AWS services within your account. Custom event buses allow you to create dedicated event buses for specific use cases or applications. Event sources are services or applications that generate events and publish them to Amazon EventBridge for processing.
+
+
+AWS Configuration : 
+
+AWS Configuration  has two  main jobs, Primary job is to record configuration  changes over time on aws resources within an aws account once enabled, The configuration  of every resource in account is  monitored and if a configuration changes then a configuration item is created which stores the configuration of the resource at that point of time. This information stored on this is the configuration and relation to other resources. It does not prevent from changes to happen it just stores the changes. This this a regional service.
+
+AWS Flow Logs :
+
+Flow Logs are a feature provided by Amazon Web Services (AWS) that allow you to capture information about the IP traffic going to and from network interfaces in your VPC. This information includes details such as source and destination IP addresses, ports, protocol, and the amount of data transferred. VPC Flow Logs can be incredibly useful for monitoring, troubleshooting, and analyzing network traffic within your AWS infrastructure. Flow Logs capture information about network traffic flowing through the network interfaces of your VPC. This includes traffic between instances within the same VPC, traffic destined for the internet, and traffic between your VPC and other AWS services.  You can customize which types of traffic you want to log by specifying the network interfaces, subnets, or entire VPCs for which you want to enable flow logs. Flow logs are delivered to an Amazon S3 bucket in a specified logging format.   
+
+Amazon Athena : 
+
+Amazon Athena is serveless interactive querying service. Amazon Athena is an interactive query service provided by Amazon Web Services (AWS) that allows you to analyze data stored in Amazon S3 using standard SQL queries. It's a serverless service, meaning you don't need to provision or manage any infrastructure; you only pay for the queries you run. Athena enables you to run SQL queries directly against data stored in Amazon S3, without needing to load it into a separate database or data warehouse. This makes it particularly useful for ad-hoc analysis of large datasets. 
+
+***********************************************************************************************************************************************************************************
+
+LAMBDA
+
+LAMBDA : 
+
+AWS Lambda is a serverless compute service provided by Amazon Web Services (AWS). It enables you to run code in response to events without the need to provision or manage servers. This means that you can focus on writing code for your applications without worrying about the underlying infrastructure.
+
+ "Serverless compute platform" refers to a computing environment where developers can run code without the need to manage or provision servers. Traditional server-based computing requires developers to set up and maintain servers, manage operating systems, handle scaling, and ensure high availability
+
+Lambda is a function as a service or fast product. That means you provide specialized and short running focused code to lambda and it take care for running and billing only for what you consume. Lambda is a piece of code that lambda runs. 
+
+LAMBDA FUNCTION : 
+
+The code you run on AWS Lambda is called a Lambda function. Think of a function as a small, self-contained application. After you create your Lambda function, it is ready to run as soon as it is initiated. Each function includes your code as well as some associated configuration information, including the function name and resource requirements. Lambda functions are stateless, with no affinity to the underlying infrastructure. Lambda can rapidly launch as many copies of the function as needed to scale to the rate of incoming events.
+
+After you upload your code to AWS Lambda, you can configure an event source, such as an Amazon Simple Storage Service (Amazon S3) event, Amazon DynamoDB stream, Amazon Kinesis stream, or Amazon Simple Notification Service (Amazon SNS) notification. When the resource changes and an event is initiated, Lambda will run your function and manage the compute resources as needed to keep up with incoming requests.
+
+
+Lambda functions are triggered by various events, such as changes to data in Amazon S3 buckets, updates to DynamoDB tables, HTTP requests via API Gateway, or custom events from other AWS services. You define the event sources and configure Lambda to execute your code in response to these events. An event-driven architecture uses events to initiate actions and communication between decoupled services. An event is a change in state, a user request, or an update, like an item being placed in a shopping cart in an e-commerce website. When an event occurs, the information is published for other services to consume it. In event-driven architectures, events are the primary mechanism for sharing information across services. These events are observable, such as a new message in a log file, rather than directed, such as a command to specifically do something. 
+
+
+
+Key features of AWS Lambda include:
+
+Serverless Architecture: With Lambda, you do not need to provision or manage servers. AWS handles the infrastructure provisioning, scaling, and maintenance for you. This allows you to focus on writing code and building applications without the overhead of managing servers.
+
+Event-Driven Execution: Lambda functions are triggered by events from different sources. You can define event sources such as AWS services, HTTP requests, or custom events. Lambda automatically invokes your function when the specified event occurs.
+
+Pay-Per-Use Pricing Model: AWS Lambda follows a pay-per-use pricing model. You are charged only for the compute time consumed by your functions, measured in milliseconds. There are no upfront costs or minimum fees, and you are billed only for the resources used during execution.
+
+Support for Multiple Runtimes and Languages: Lambda supports a variety of programming languages, including Node.js, Python, Java, Go, Ruby, and .NET Core. You can write Lambda functions in your preferred language and use familiar development tools and libraries.
+
+Integration with AWS Services: Lambda integrates seamlessly with other AWS services. You can use Lambda functions to process data from services such as Amazon S3, DynamoDB, Kinesis, SQS, SNS, and more. This enables you to build serverless architectures and event-driven workflows.
+
+REAL-TIME SCENARIO :  Consider a scenario of a web application where users upload images, and you need to generate thumbnails for these images in real-time. 
+
+Image Thumbnail Generation:Scenario: Users upload images to the web application, and you want to generate thumbnails for these images to improve performance and optimize storage.
+
+Using AWS Lambda:Event Source: Configure an Amazon S3 bucket to trigger a Lambda function whenever a new image is uploaded to the bucket.
+
+Lambda Function: Write a Lambda function in Python or Node.js to process the uploaded image. Use a third-party image processing library (e.g., Pillow for Python) to generate a thumbnail version of the image.
+
+Processing:Lambda Execution: When a user uploads an image to the S3 bucket, the S3 event triggers the Lambda function. The Lambda function retrieves the uploaded image, generates a thumbnail version of the image, and stores it back in the S3 bucket.
+
+Benefits:Real-time Image Processing: AWS Lambda enables real-time processing of uploaded images, allowing you to generate thumbnails on-the-fly without manual intervention.
+
+Scalability: Lambda automatically scales to handle varying workloads and traffic patterns. Whether you have a few uploads or thousands of uploads per second, Lambda can scale to meet the demand.
+
+Cost-Effectiveness: With Lambda's pay-per-use pricing model, you only pay for the compute time consumed by your functions. You can optimize costs by processing images only when needed, without incurring idle infrastructure costs.
+
+In summary, AWS Lambda provides a serverless compute platform that enables you to run code in response to events without the need to provision or manage servers. It offers scalability, cost-effectiveness, and seamless integration with other AWS services, making it ideal for building real-time, event-driven applications and workflows.
+
+***********************************************************************************************************************************************************************************
+
+RED SHIFT
+
+AMAZON REDSHIFT : 
+
+Amazon Redshift is a fully managed, petabyte-scale data warehouse service provided by Amazon Web Services (AWS). It is designed to analyze large datasets using SQL queries and business intelligence (BI) tools, making it ideal for data warehousing, analytics, and reporting applications. Amazon Redshift plays a crucial role in modern data analytics and business intelligence by providing a scalable, cost-effective, and high-performance data warehousing solution. Its main importance lies in its ability to overcome the limitations of traditional data warehousing systems, offering improved performance, scalability, and ease of management.
+
+Traditional data warehouses often struggle to handle the ever-growing volume of data generated by businesses today. Amazon Redshift addresses this challenge by providing a scalable solution that can handle petabytes of data. Its architecture allows users to easily scale compute and storage resources up or down as needed, ensuring that the data warehouse can grow with the business. Analyzing large datasets quickly and efficiently is essential for making data-driven decisions in real-time. Amazon Redshift leverages a massively parallel processing (MPP) architecture and columnar storage to deliver high-performance query processing, enabling fast execution of complex analytical queries on large datasets. Amazon Redshift offers a cost-effective alternative by providing a fully managed service with pay-as-you-go pricing. Amazon Redshift seamlessly integrates with a wide range of data sources, analytics tools, and business intelligence platforms. This includes integration with AWS services such as Amazon S3, Amazon EMR, Amazon Kinesis, and AWS Glue, as well as third-party BI tools like Tableau, Looker, and Power BI. 
+
+REAL-TIME SCENARIO : 
+
+Consider a e-commerce website  that collects vast amounts of transactional data from its online and offline stores. The company needs to analyze this data in real-time to gain insights into customer behavior, optimize inventory management, and personalize marketing campaigns.
+
+In the above case problems faced without redshift : 
+
+--->Without a data warehousing solution like Redshift, the retail company would face challenges in analyzing large volumes of transactional data in real-time. Traditional databases or data processing systems may struggle to handle the scale and complexity of the data, leading to slow query performance and limited analytical capabilities
+
+---> Without real-time access to transactional data, the retail company would experience delays in gaining insights into customer behavior, inventory levels, and sales trends. This would result in sales drop. 
+
+---> So, Inorder to overcome the drawbacks such as limited data analysis, delayed insights and inefficient decision making  we use redshift.
+
+AFTER REDSHIFT : 
+
+--->Amazon Redshift provides a scalable and fully managed data warehousing solution. The transactional data from online and offline stores can be ingested into Redshift, where it is stored efficiently in a columnar format. Redshift's distributed and parallel processing architecture allows for fast querying and analysis of large datasets.
+
+---> By analyzing transactional data in real-time, the retail company can gain insights into inventory levels, product demand, and sales trends. This helps in keeping and increase in sales of the company. 
+
+--->With real-time access to customer transaction data, the retail company can personalize marketing campaigns based on individual customer preferences, purchase history, and behavior. They can use Redshift to segment customers, identify high-value customers, and target them with tailored promotions, discounts, or recommendations in real-time. This can be used to plan effective marketing strategies. 
+
+
+
+REDSHIFT ARCHITECTURE :
+                                                            
+CLIENT---|                                                                                                   
+         |               JDBC/ODBC              COMPUTE NODE--(node slices)
+CLIENT ---------------- LEADER NODE ---------- COMPUTE NODE--(node slices)
+         |              |                       COMPUTE NODE--(node slices)
+CLIENT---|
+
+As mentioned above the redshift architecture is a cluster where multiple clients can be connected to a leader node where on the other side one or multiple(128) compute nodes are connected to the leader node and compute nodes are also having with multiple node slices in them. depending on the requirement. This is not infinity but 128 compute nodes can hold a lot of data. Each cluster can contain multiple databases. The user data will be stored on the compute nodes. Here leader node manages the communication with clients and communication with the compute nodes. This acts as the external communication interface between clients, redshift and compute nodes, It receives all the queries from the client application and passes the queries and develops execution plans which are an ordered set of steps to process those queries it then coordinates the parallel execution of those plans with the compute nodes and also aggregates the immediate results from those nodes and finally the leader node will return those results back to the client applications 
+
+COMPUTE NODES : Compute nodes are responsible for executing the steps specified in the execution plan that is getting from the leader node and transmitting data among themselves to serve those queries and it then sends those intermediate results back to leader node for aggregation before being sent back to the client applications. 
+
+---> Each compute node has its own CPU, memory, and attached disk storage which are determined by the node type you choose. There are two different types of node types to choose in your red shift cluster and you choose this when you set it up. One is  dense storage des node type that allows you to create very large data ware houses using hard disk drives for very low price point and these are available in two different sizes extra large and 8xl. Extra large has 3 hdds with a total of two tera bytes of magnetic storage where as 8xl has 24 hdd with 16 tera bytes of magnetic storage. 
+
+***********************************************************************************************************************************************************************************
+
+SNS, SQS & KINESIS
+
+
+SNS 
+
+We generally receive notifications on our mobile phones from the applications we use who sends these notification how rhey send us lets learn about it. 
+
+Simple Notification Service is a highly available, scalable, fully managed pub-sub messaging service. Pub-sub is a publisher and subscriber architecture where publisher maintains and indirect communication with the subscribers. Lets see how, 
+
+SNS PRINCIPLE : 
+
+Here published wants to send the notifications to the subscriber so he creates a topic and this topic acts as the access point between the publisher and subscriber and the publisher send the messages to the topic and his job is done. Now after publisher sending the message to the topic the topic will send this message to the subscriber who have subscribed to this particular topic. This message can be in any format either SMS, email, mobile notification or Amazon SQS. 
+
+SETTING UP SNS IN AWS CONSOLE:
+
+When a publisher wants to send any message to the subscriber you initially create a topic in the console while creating a topic you need to select the topic type it can be of either FIFO or STANDARD lets look into these types.
+
+FIFO: 
+
+First In First Out this type mainly focuses on the order of delivering the message and mainly used in financial applications while performing the transactions.
+
+STANDARD : 
+
+This type of topic do not focuses on order of the messages. we will come up with example for each of this topic in further discussion.
+
+So, when you create a topic you will select the type of topic based on the requirement and after selecting the topic you will give permission that who can send the message only publisher or anyone in the organization or only the aws account holders. In the same way you will also set the permissions for receiving the messages that who can receive the message only subscribers or everyone or only particular consumers as such based on the requirement.
+
+Lets Consider a Custom Notification Scenario:-
+
+You are the owner of Youtube and consumers using YouTube are in millions of them some are subscribed to YouTube premium while others are not but still using with the ads running before video. Now the publisher wants to send the notifications in such a way that the users who have premium accounts will get notifications of new releases, and future premium offers and etc, while on the other hand users without subscription for premium will get notifications saying come its time to go ads free or its hight time tom save your time by going ad free as such. Now in this scenario you need to send the custom notifications So, you will be creating the custom policies using JSON and will be directly attaching them to the topic so that the notifications will be sent based on the policies that are customized and you can also set permissions directly while creating the topic for who all can receive the notifications and who cannot.
+
+Using FIFO and  Standard in Realife : 
+
+If you consider the LYFT application which is used for cab service, Here you will be having 3 sides of notification, Customer side notification , Driver side notification and Administrator side notification. 
+
+1) Customer Side Notification :
+
+When a user requests the ride and the first notification he receives is the driver details and then when he is 3 min away and then  when he reaches the pickup location and when the ride started and then went ride is about to end and when you reach the destination.
+
+2) Driver Side Notification :
+
+When the driver accepts the ride he will get the notification about the passenger details, then after reached the pickup location and then starting the ride then moments before reaching the destination and after finishing the ride.
+
+ In both the above cases the notifications are sent orderly one after other according to the situation such that the consumers will receive the notification after each and every operation. This scenario focuses on the ordering of messages hence we use FIFO in this type of scenarios.  
+
+FIFO is mainly used in financial applications when you perform multiple transactions at a time you should receive the notifications after each and every immediate transaction where the order of the notifications are very important. Now lets see where do we use the Standard type,
+
+Standard type is mainly used where the ordering of the notifications are not important such as consider a social media platform such as instagram her you will be receiving the notification for posts, likes and comments. Here in this scenario the order of the notifications doesn't really matter and have very less priority hence in this cases we use standard type.
+
+
+SNS with AWS Services :
+
+SNS can be integrated with other multiple services in AWS such as cloudwatch where we use SNS for sending alarms or alerts when a resource setup reaches threshold and also used in CloudFormation when a stack is changed or updated will receive a notification accordingly. So SNS can be integrated with multiple AWS services for productive usage. 
+
+SIMPLE QUEUING SERVICE :
+
+SQS - Simple Queue Service
+
+Definition :
+
+SQS queues are a managed message queue service in AWS which help to decouple application components, allow Asynchronous messaging or the implementation of worker pools. This provides fully-managed message queues. It's a public service and accessible anywhere. Messages can be unto 256KB in data and if larger can be linked and stored in S3 bucket.   
+
+
+WHY SQS : 
+
+Let's say we have a two tier application. Web tier and App tier where web tier is receiving the information and send it to the app tier to process the information and app tier need to keep with the workload or else failure may occur and results in dataloss.  Here web tier is directly connected to app tier and this process is known as data integration. In data integration web tier sends the data from web tier to app tier and if the traffic increases the data transfer from web tier to app tier also increases and the app tier cannot process the data due to increase in traffic the data will be lost ignorer to overcome this problem by data integration we replace this process bye decoupled integration.
+
+What is Decoupled Integration : 
+
+In this process to transfer the data from web tier to app tier in between we connect SQS queuing service. So the data from the web tier do not direct sent to app tier it is sent to sms queuing service connected in between here the sis collects all the data sent and puts them in the order they receive and send it to the app tier after acknowledging that app tier can receive the data here even if the traffic increases the failure will not occur because sis will control the traffic and send then data in the queue without missing any data. this process is known as data integration. The data sent to sqs will be stored for a certain Time till the app tier iOS ready to process the data making sure the data isn't lost. 
+
+TYPES OF SQS :
+
+1) Standard Queue:  This is the default queue type in Amazon SQS. It offers a highly scalable and reliable messaging queue with best-effort ordering and at-least-once message delivery semantics. Standard queues support nearly unlimited throughput, making them suitable for a wide range of messaging use cases. This mainly used where ordering is not important. 
+
+Properties : 
+---> Standard queues support a nearly unlimited number of transactions per second.
+---> Best-Effort Ordering: Occasionally, messages might be delivered in an order different from which they were sent and received is strictly preserved.
+----> At-Least-Once Delivery: A message is delivered at least once, but occasionally more than one copy of a message is delivered.
+
+2) FIFO Queue : In AWS, a FIFO (First-In-First-Out) queue refers to a type of queue provided by Amazon Simple Queue Service (SQS). FIFO queues maintain the order in which messages are sent and received, ensuring that the first message sent is also the first to be received and processed by the consumers. This makes FIFO queues suitable for scenarios where message order is critical and where processing messages out of sequence could lead to errors or inconsistencies.
+
+Properties :
+---> High Throughput: FIFO queues support up to 300 messages per second (300 send, receive, or delete operations per second). When you batch 10 messages per operation (maximum), FIFO queues can support up to 3,000 messages per second.
+--->  First-In-First-out Delivery: The order in which messages are delivered in an order  from which they were sent and received is strictly preserved.
+---> Exactly-Once Processing: A message is delivered once and remains available until a consumer processes and deletes it. Duplicates are not introduced into the queue.
+
+
+Dead Letter Queue : 
+
+This not a type of queue but a configuration in SQS, The main task of a dead-letter queue is handling message failure
+• A dead-letter queue lets you set aside and isolate messages that can't be processed correctly to determine why their processing didn't succeed
+• It is not a queue type, it is a standard or FIFO queue that has been specified as a dead-letter queue in the configuration of another standard or FIFO
+
+Delay Queue : 
+
+An SQS Delay Queue is a type of Amazon Simple Queue Service (SQS) queue that introduces a delay before messages are available for consumption by consumers. In other words, messages sent to a delay queue are not immediately visible to consumers but are instead held in the queue for a specified period of time before becoming available. Delay queues are useful in scenarios where you need to defer the processing of messages until a later time, allowing for time-sensitive operations or scheduling of tasks.
+
+KINESIS
+
+Amazon Kinesis :
+
+This is a set of services provided by the aws service which intakes huge amounts of data i.e this data can be from any of the sources such as click streams or applications or etc and taking the large amounts of data and analyzing them and making something out the analysis such as from the analysis report fixing the errors or strengthening up the weak areas or knowing the trrend running and marketing according to the trend or analyzing the report and making business strategies for the market.  
+
+
+Kinesis Data Stream :
+
+Kinesis is a scalable streaming service i.e ingest data from lots of devices or from lots of applications and producers send these data into the kinesis stream which is basic entity of kinesis. The data ingested by producers to kineses stream by default will be available fro 24 hours and after 24 hrs a second later it will be deleted and this can be flexible by maintaining it throughout 365 days based on the requirement.
+This provides a way for producers to send huge quantities of data into aws , storing that data for a window of time and allowing multiple consumers to consume at different rates. The data uploaded in data stream will be stored as shards, more shards more expensive and more effective , These shards contains the data records where kinesis data records 1 record=1MB and will be having large number of records. 
+
+Kinesis firehose : 
+
+Here producers are designed to put data into kinesis streams and consumers are designed to consumer data from the kinesis stream. kinesis by default doesn't offer way to persist data the once the records age passes it will be deleted forever. Now kineses firehose is fully managed service to deliver data to supported services as S3 which lets data be persisted and it also used to load data to data stores and analytical services.
+
+Function of firehose is to deliver the incoming data coming from the sources to the destination, it can deliver to third party services, it can deliver to S3 buckets. Here the data uploaded by the producers will be stored into the kineses data stream it is a non persistent storage and this is integrated with the kinesis firehose which delivers the data to the respective destination such as S3 buckets and the data is delivered in real time. In kineses stream just act as a bridge between the producers and consumers but do not perform any action because the producers and consumers are designed accordingly to upload and consume then data.  So, when we connect the data stream to the firehose, data stream act as source for the firehose and the firehose delivers the data accordingly to respective destination. The producers can directly put the data into firehose if they don't require any function of data stream.  
+
+Data Analytics:
+
+Description: Amazon Kinesis Data Analytics enables you to analyze streaming data using standard SQL queries.
+Real-world Scenario: Suppose you operate a fleet management system with vehicles equipped with GPS devices. You can use Kinesis Data Analytics to analyze the real-time stream of GPS data, calculate metrics such as vehicle speed, fuel consumption, and route efficiency, and detect anomalies or deviations from predefined patterns, allowing you to optimize fleet operations and improve fuel efficiency.
