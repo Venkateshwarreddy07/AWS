@@ -187,5 +187,64 @@ Enterprise Applications: Large enterprises can migrate their legacy applications
 Development and Testing: Development teams can create isolated environments for developing and testing applications without affecting the production environment.
 Overall, VPCs provide a versatile and secure way to manage cloud resources, making them essential for businesses looking to leverage cloud computing while maintaining control over their network environment.
 
+***********************************************************************************************************************************************************************************
+
+S3- SIMPLE STORAGE SERVICE:
+Amazon S3 (Simple Storage Service) buckets are containers for storing objects in the Amazon Web Services (AWS) cloud. They are essentially folders within the S3 service where you can store and organize data, such as documents, images, videos, and application data.
+
+WHY S3 :
+
+S3 generally used for storing any kind of data. S3 bucket is highly available storage service used to store wide range of data types. Many organizations use S3 to store,backup,retrive data securly from the cloud.S3 buckets are used foe databackup and store critical data for longterm with snapshots as alternate security to overcome disaster recovery, dataloss.S3 is private by default.
+
+S3 ACCESS: 
+
+When we create a S3 bucket a bucket can be managed by set of rules here they are policies lets look into them, 
+
+IDENTITY BASED POLICIES:  These are directly attached to IAM (Identity and Access Management) users, groups, or roles. These policies define what actions a specific user can perform on Amazon S3 resources. You are an admin and have read only acess and developer may have both the read and write access this actions are controlled by IAM policies.
+
+RESOURCE-BASED POLICIES: These are attached to S3 buckets or objects. These policies define who can access the resources within the bucket or object and what actions they can perform. In this policies we define the cross region access as S3 being the regional service. Lets say there is a admin and developer admin may not have access to developer code this is what the resource policies deals with the access of letting the roles have permission or not.
+
+INLINE POLOCIES : These are said to all the additional polocies that are created by the owner to customize and create his individual set of rules.
+ACL: 
+
+
+STATIC WEBSITE HOSTING:  
+
+We generally access S3 objects using AWS API's but using static website hosting makes it more secure because it allows access through standard https by individuals using web browser.
+
+While hosting a static website we enable index and error documents these documents come  into action when you try to access a unspecified page you will get the index document for example you searched amazon you will get a amazon main index page because you didn't specify what you want in amazon. Now when you try to access a anything that you are restricted or anything that doesn't exist you will receive and error page.
+
+Now if you host a static website by enabling static website hosting you can host a website but still you cannot access the website because S3 is always private inorderr to access the website you need to add the bucket policy making the website publicly accessible to everyone.  
+
+VERSIONING:
+
+
+In S3 bucket versioning it is a feature in S3 which allows to store multiple versions of an object in a bucket without overriding and it gives you the latest version keeping all the previous versions archived but you still have access to those previous versions. You can enable versioning from disable to enable but can't disable it again you can suspend and reenable it but cannot disable. .Versioning is controlled at the bucket level. 
+
+Now if you enable versioning and upload an object the object is assigned with a Version ID and now lets say we have uploaded an object A and A is assigned with an object ID now you want to make some changes to A so you upload a new object A with some additions changes now the new A is assigned with other ID and this one will be available in the bucket but still you have the older version with old version id in the bucket and can also have access to that object. this is where you will have the older versions and can avoid overriding. the one which you uploaded recently is the current version running in the bucket.
+
+In versioning lets assume you have uploaded A and B now if you delete A the deleted object A is stored as deleted mark A in the bucket but not deleted where you can still have access to the deleted one it is just marked a deleted but not deleted.If you want to delete it permananelty you need to select the deleted marked object enter the version ID and then delete permanently.
+
+PERFORMANCE OPTIMIZATION : We generally upload objects into S3 buckets lets assume we are uploading an object consists of data 7GB and it had uploaded unto 6.5 GB and due to some technical issues the upload fails the only way to continue this is the reuploasd from starting which causes the data loss and is a time consuming to improve this performance they came up with a solution the same 6GB file it split into many sections and these section can contain from 5MB to 5GB and all these sections transfer the data paralally at same time and if the one section fails the particular section starts reuploading from beginning and the data is divided into section each section takes less time to make a reupload. this process is known as performance optimization. 
+
+
+KEY MANAGEMENT SYSTEM:
+
+KMS the name itself suggests  managing keys. It lets you create, store and manage cryptographic keys, these are the keys used to convert plain text ti cipher text and vice versa. It is capable of handling both symmetric and asymmetric keys, It can also perform encryption and decryption operations. KMS also provides a FIPS 140-2 level 2 security service this is a US security standard. KMS key contain key ID, creation date, key policy, key description and state of key. Every KMS key is backed by physical key material this is used to encrypt and decrypt things that you give. This key material is imported or created in KMS and this is used to encrypt or decrypt data unto 4KB in size. KMS generally only used to work on small bits of data. when a key is created in KMS it is created with physical backing material and is stored in encrypted form nothing in KMS is stored in plain text format.  Now the user makes an encrypt call to KMS the KMS verifies the users have the permission to KMS and now the encrypted key will be decrypted and KMS accepts and the plain text sent by the user will be encrypted with this keys and return to the user. Whenever the user wants to decrypt this data the user send the decrypt call and send the encrypted data, here the decryption process is different all the data required to decrypt the encrypted key is available in itself. Now the encrypted key is accepted and will be decrypted and sent to user. In this whole process the keys never leave the KMS system and data is never stored in plaintext form at any point in KMS. DEK's are the data encryption keys which are another type of keys that KMS can generate to encrypt data that is larger than 4KB. KMS doesn't store the encrypted or decrypted keys it just creates them using the operations and will discard them after use but never restores them.  when a data encryption key is generated the KMS provides two versions one is plain text where an immediate cryptographic action is performed and then this encrypted key is encrypted using KMS.
+
+
+
+S3 REPLICATION: S3 replication is a feature in S3 buckets which automatitally copies objects from one amazon S3 bucket to other bucket in same or different region. This enables you to replicate objects in buckets for various reasons.
+
+Explain S3 replication and mention its uses it is used for various reasons such as data availability and disaster recovery.
+
+PRE ASSIGNED URLs:
+
+where you can give other person or application access to an object inside a bucket using your credentials in a safe and secured way.
+
+Now upload an object into a bucket and now you can generate pre assigned URL using cloud shell and also in console. while generating url you need to assign time till which the URL is valid. now you can have access to that object using this url and now if you add an inline policy that restricts the access of iamadmin now you do not have access to the object but still you can create preassigned URL but this url shows the access denied. This is mainly used in remote work scenarios. 
+
+***********************************************************************************************************************************************************************************
+
 
  
