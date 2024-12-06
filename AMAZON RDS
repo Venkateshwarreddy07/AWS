@@ -1,6 +1,6 @@
 Databases are the systems which store and manage the data. A relational database system is a type of database management system (DBMS) that organizes data into tables with rows and columns, and establishes relationships between these tables based on common attributes. Amazon Relational Database Service (Amazon RDS) is a web service that makes it easier to set up, operate, and scale relational databases in the cloud.These are broadly split into relational and non relational databases systems. Relational database systems refers to relational database platforms here the data is stored in very structured form.  This structure is known as schema and this is fixed and rigid. This defines the names of things and values of things which needs to be stored and where need to be stored.  The relationship between the tables is fixed before entering the data and cannot be changed. Amazon DynamoDB is a fully managed NoSQL database service that offers fast and flexible document and key-value storage with seamless scalability and low latency. DynamoDB is ideal for applications that require fast and flexible NoSQL database capabilities, while RDS is suitable for applications that require the traditional relational database model and SQL querying.
 
-DATA SOURCE TYPES : 
+DATA SOURCE TYPES:
 
 STRUCTURED DATA : 
 
